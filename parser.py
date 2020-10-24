@@ -1,11 +1,9 @@
-from bs4 import BeautifulSoup
-import requests as req
+from grab import Grab, GrabTimeoutError
 
-resp = req.get('http://etender.uzex.uz/lots/1/0')
-
-soup = BeautifulSoup(resp.text, 'lxml')
-
-
-app = soup.find('app-root')
-
-print(app, type(app), sep='\n')
+while True:
+    try:
+        g = Grab(log_file='out.html')
+        g.go('http://etender.uzex.uz/lots/1/0')
+        break
+    except GrabTimeoutError:
+        continue
