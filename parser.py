@@ -14,9 +14,14 @@ browser.get('http://etender.uzex.uz/lots/1/0')
 
 loadButton = func.find_loadButton(browser)
 func.press_loadButton(loadButton)
+ids = []
 
 res = browser.find_elements_by_xpath("//div[@class ='lot-item__num-cat']/div/span")
 for i in res:
-    print(i.text)
+    # print(i.text)
+    ids.append(int(i.text))
+
+for id in ids:
+    print(id)
 
 browser.quit()
