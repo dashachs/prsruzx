@@ -19,6 +19,4 @@ res = browser.find_elements_by_xpath("//div[@class ='lot-item__num-cat']/div/spa
 for i in res:
     print(i.text)
 
-    # print(res[i].text)
-    # print('\n\n')
 browser.quit()
