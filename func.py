@@ -1,5 +1,5 @@
-from selenium import webdriver
 from selenium.common.exceptions import StaleElementReferenceException
+
 
 def find_loadButton(browser):
     buttons = browser.find_elements_by_css_selector('button.btn-outline-primary')
