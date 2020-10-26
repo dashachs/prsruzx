@@ -19,9 +19,11 @@ ids = []
 res = browser.find_elements_by_xpath("//div[@class ='lot-item__num-cat']/div/span")
 for i in res:
     # print(i.text)
-    ids.append(int(i.text))
+    ids.append(i.text)
 
 for id in ids:
-    print(id)
+    link = "http://etender.uzex.uz/lot/" + id
+    print(link)
+    func.parseLot(browser, link)
 
 browser.quit()
