@@ -18,6 +18,8 @@ func.press_loadButton(loadButton)
 res = browser.find_elements_by_class_name('lot-item')
 for i in range(len(res)):
     print(i)
+    text = browser.find_element_by_class_name("lot-item__num-cat").text
+    print(text)
     # print(res[i].text)
     # print('\n\n')
 browser.quit()
