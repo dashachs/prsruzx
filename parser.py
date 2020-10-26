@@ -14,16 +14,16 @@ browser.get('http://etender.uzex.uz/lots/1/0')
 
 loadButton = func.find_loadButton(browser)
 func.press_loadButton(loadButton)
-ids = []
+lotIDs = []
 
 res = browser.find_elements_by_xpath("//div[@class ='lot-item__num-cat']/div/span")
 for i in res:
     # print(i.text)
-    ids.append(i.text)
+    lotIDs.append(i.text)
 
-for id in ids:
-    link = "http://etender.uzex.uz/lot/" + id
-    print(link)
+for lotID in lotIDs:
+    link = "http://etender.uzex.uz/lot/" + lotID
+    print(lotID, ": ", link)
     func.parseLot(browser, link)
 
 browser.quit()
