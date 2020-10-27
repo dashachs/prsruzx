@@ -22,10 +22,6 @@ def press_loadButton(button):
 def parseLot(browser, link, currentLot):
     browser.get(link)
 
-    # +lotID, +category, +linkToLot, +startDate, +endDate, +purchaseName, +customerName, +customerDetails,
-    #                  +customerContact, -customerAddress, +deliveryAddress, -deliveryTerm, -paymentTerm, -specialConditions,
-    #                  -attachedFile, -description, +startingPrice
-
     # waiting for page to load
     try:
         textXPATH = "//div[@class='row lot__top-infro-wrapper ']/div/div[@class='card lot__top-info']/p"
@@ -40,7 +36,8 @@ def parseLot(browser, link, currentLot):
         temp_customerName = browser.find_element_by_xpath("//div[@class='mb-4']/div[2]/div[@class='col-md-7 ']/p/strong"). text  # customerName - Наименование заказчика
         temp_customerDetails = browser.find_element_by_xpath("//div[@class='mb-4']/div[1]/div[@class='col-md-7 ']/p/strong").text  # customerDetails - реквизиты заказчика
         temp_deliveryAddress = browser.find_element_by_xpath("//div[@class='mb-4']/div[13]/div[@class='col-md-7 ']/p/strong").text  # deliveryAddress - Адрес поставки
-        temp_customerContact = browser.find_element_by_xpath("//table[@class='table custom-table-dark--2 ']/tbody/tr/th").text  # customerContact
+        temp_customerContact = browser.find_element_by_xpath("//table[@class='table custom-table-dark--2 ']/tbody/tr/th").text + ", " + \
+                               browser.find_element_by_xpath("//table[@class='table custom-table-dark--2 ']/tbody/tr/td").text  # customerContact - Контакты заказчика (ответственного лица, контактное лицо)
         temp_paymentTerm = browser.find_element_by_xpath("//div[@class='mb-4']/div[6]/div[@class='col-md-5 text-md-right']/p").text + \
                            browser.find_element_by_xpath("//div[@class='mb-4']/div[6]/div[@class='col-md-7 ']/p/strong").text + ";\n  " + \
                            browser.find_element_by_xpath("//div[@class='mb-4']/div[7]/div[@class='col-md-5 text-md-right']/p").text + \
@@ -50,7 +47,10 @@ def parseLot(browser, link, currentLot):
                            browser.find_element_by_xpath("//div[@class='mb-4']/div[9]/div[@class='col-md-5 text-md-right']/p").text + \
                            browser.find_element_by_xpath("//div[@class='mb-4']/div[9]/div[@class='col-md-7 ']/p/strong").text + ";\n  " + \
                            browser.find_element_by_xpath("//div[@class='mb-4']/div[12]/div[@class='col-md-5 text-md-right']/p").text + \
-                           browser.find_element_by_xpath("//div[@class='mb-4']/div[12]/div[@class='col-md-7 ']/p/strong").text
+                           browser.find_element_by_xpath("//div[@class='mb-4']/div[12]/div[@class='col-md-7 ']/p/strong").text  # paymentTerm - Условия оплаты
+        temp_description = browser.find_element_by_xpath("//div[@class='lot__products__item__footer']/p").text.replace('Подробное описание: ', '')
+        temp_deliveryTerm = browser.find_element_by_xpath("//table[@class='table custom-table-dark--2']/tbody/tr/td[7]").text
+        temp_specialConditions = browser.find_element_by_xpath("//*[@id='lot-details-tab-content-1']/div/div[@class='mb-4']/p").text
 
     currentLot.linkToLot = link
     currentLot.startDate = temp_startDate
@@ -62,6 +62,9 @@ def parseLot(browser, link, currentLot):
     currentLot.deliveryAddress = temp_deliveryAddress
     currentLot.customerContact = temp_customerContact
     currentLot.paymentTerm = temp_paymentTerm
+    currentLot.description = temp_description
+    currentLot.deliveryTerm = temp_deliveryTerm
+    currentLot.specialConditions = temp_specialConditions
 
     print("lotID\n  ", currentLot.lotID,
           "\nlinkToLOt\n  ", currentLot.linkToLot,
@@ -72,11 +75,11 @@ def parseLot(browser, link, currentLot):
           "\ncustomerName\n  ", currentLot.customerName,
           "\ncustomerDetails\n  ", currentLot.customerDetails,
           "\ncustomerContact\n  ", currentLot.customerContact,
-          "\ncustomerAddress\n  ",
+          "\ncustomerAddress\n  ", currentLot.customerAddress,
           "\ndeliveryAddress\n  ", currentLot.deliveryAddress,
-          "\ndeliveryTerm\n  ",
+          "\ndeliveryTerm\n  ", currentLot.deliveryTerm,
           "\npaymentTerm\n ", currentLot.paymentTerm,
-          "\nspecialConditions\n  ",
+          "\nspecialConditions\n  ", currentLot.specialConditions,
           "\nattachedFile\n  ",
-          "\ndescription\n  ",
+          "\ndescription\n  ", currentLot.description,
           "\nstartingPrice\n  ", currentLot.startingPrice)
