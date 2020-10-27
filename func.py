@@ -30,13 +30,9 @@ def parseLot(browser, link):
         )
     finally:
         res = browser.find_elements_by_xpath(
-            "//div[@class='row lot__top-infro-wrapper ']/div/div[@class='card lot__top-info']/p |"
-            "//div[@class='row lot__top-infro-wrapper ']/div/div[@class='card  lot__top-info']/p |"
-            "//div[@class='row lot__top-infro-wrapper ']/div/div[@class='card  lot__top-info ']/p |"
-            "//div[@class ='mb-4']/div/div/p |"
-            "//div[@class ='col-md-3 col-lg-2 mb-3']/div[@class ='card lot__top-info']/p |"
-            "//div[@class ='col-md-6 col-lg-4 mb-3']/div[@class ='card lot__top-info']/p |"
-            "//div[@class ='col-md-6 col-lg-4 mb-3']/div[@class ='card lot__top-info']/p/strong")
+            "/html/body/app-root/main/app-lot-item/div/div[1]/section/div[2]/div[2]/div/p[2]/strong |" # дата начала
+            "/html/body/app-root/main/app-lot-item/div/div[1]/section/div[2]/div[3]/div/p[2]/strong |" # дата окончания
+            "/html/body/app-root/main/app-lot-item/div/div[1]/section/div[2]/div[4]/div/p[2]/strong") # Итого стартовая стоимость
 
     for i in res:
         print(i.text)
