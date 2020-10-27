@@ -1,5 +1,6 @@
 from selenium import webdriver
 import func
+import object_of_lot
 
 options = webdriver.ChromeOptions()
 options.add_argument('--headless')
@@ -19,7 +20,7 @@ for i in res:
     # print(i.text)
     lotIDs.append(i.text)
 
-# pars lots
+# parse lots
 for lotID in lotIDs:
     link = "http://etender.uzex.uz/lot/" + lotID
     print(lotID, ": ", link)
