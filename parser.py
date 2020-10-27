@@ -38,8 +38,7 @@ for i in range(len(lotNames)):
     link = "http://etender.uzex.uz/lot/" + lotIDs[i]
     # adding new lot to list of lots (adding ID and purchase name)
     listOfLots.append(object_of_lot.lot(lotIDs[i], 1, 1, 1, 1, lotNames[i], 1, 1, 1, lotAdresses[i], 1, 1, 1, 1, 1, 1, 1))
-    print(listOfLots[i].lotID, ": ", link)
-    print(listOfLots[i].purchaseName)
+    print("\n==========================")
     func.parseLot(browser, link, listOfLots[i])
 
 # close browser
