@@ -26,5 +26,13 @@ for lotID in lotIDs:
     print(lotID, ": ", link)
     func.parseLot(browser, link)
 
+#create lot's object
+listOfLots = []
+for i in range(len(lotIDs)):
+    listOfLots.append(i)
+    listOfLots[i] = object_of_lot.lot(lotIDs[i], 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+    # нужно добавть заполнить все поля в объекте, или указать значения по умолчанию
+    # это просто пример и он запоминает пока лишь ID лота
+
 # close browser
 browser.quit()
