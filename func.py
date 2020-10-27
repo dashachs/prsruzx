@@ -41,6 +41,16 @@ def parseLot(browser, link, currentLot):
         temp_customerDetails = browser.find_element_by_xpath("//div[@class='mb-4']/div[1]/div[@class='col-md-7 ']/p/strong").text  # customerDetails - реквизиты заказчика
         temp_deliveryAddress = browser.find_element_by_xpath("//div[@class='mb-4']/div[13]/div[@class='col-md-7 ']/p/strong").text  # deliveryAddress - Адрес поставки
         temp_customerContact = browser.find_element_by_xpath("//table[@class='table custom-table-dark--2 ']/tbody/tr/th").text  # customerContact
+        temp_paymentTerm = browser.find_element_by_xpath("//div[@class='mb-4']/div[6]/div[@class='col-md-5 text-md-right']/p").text + \
+                           browser.find_element_by_xpath("//div[@class='mb-4']/div[6]/div[@class='col-md-7 ']/p/strong").text + ";\n  " + \
+                           browser.find_element_by_xpath("//div[@class='mb-4']/div[7]/div[@class='col-md-5 text-md-right']/p").text + \
+                           browser.find_element_by_xpath("//div[@class='mb-4']/div[7]/div[@class='col-md-7 ']/p/strong").text + ";\n  " + \
+                           browser.find_element_by_xpath("//div[@class='mb-4']/div[8]/div[@class='col-md-5 text-md-right']/p").text + \
+                           browser.find_element_by_xpath("//div[@class='mb-4']/div[8]/div[@class='col-md-7 ']/p/strong").text + ";\n  " + \
+                           browser.find_element_by_xpath("//div[@class='mb-4']/div[9]/div[@class='col-md-5 text-md-right']/p").text + \
+                           browser.find_element_by_xpath("//div[@class='mb-4']/div[9]/div[@class='col-md-7 ']/p/strong").text + ";\n  " + \
+                           browser.find_element_by_xpath("//div[@class='mb-4']/div[12]/div[@class='col-md-5 text-md-right']/p").text + \
+                           browser.find_element_by_xpath("//div[@class='mb-4']/div[12]/div[@class='col-md-7 ']/p/strong").text
 
     currentLot.linkToLot = link
     currentLot.startDate = temp_startDate
@@ -51,6 +61,7 @@ def parseLot(browser, link, currentLot):
     currentLot.customerDetails = temp_customerDetails
     currentLot.deliveryAddress = temp_deliveryAddress
     currentLot.customerContact = temp_customerContact
+    currentLot.paymentTerm = temp_paymentTerm
 
     print("lotID\n  ", currentLot.lotID,
           "\nlinkToLOt\n  ", currentLot.linkToLot,
@@ -64,7 +75,7 @@ def parseLot(browser, link, currentLot):
           "\ncustomerAddress\n  ",
           "\ndeliveryAddress\n  ", currentLot.deliveryAddress,
           "\ndeliveryTerm\n  ",
-          "\npaymentTerm\n  ",
+          "\npaymentTerm\n ", currentLot.paymentTerm,
           "\nspecialConditions\n  ",
           "\nattachedFile\n  ",
           "\ndescription\n  ",
