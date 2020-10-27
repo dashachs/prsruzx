@@ -19,8 +19,12 @@ def press_loadButton(button):
         pass
 
 
-def parseLot(browser, link):
+def parseLot(browser, link, currentLot):
     browser.get(link)
+
+    # +lotID, +category, +linkToLot, +startDate, +endDate, +purchaseName, +customerName, +customerDetails,
+    #                  +customerContact, -customerAddress, +deliveryAddress, -deliveryTerm, -paymentTerm, -specialConditions,
+    #                  -attachedFile, -description, +startingPrice
 
     # waiting for page to load
     try:
@@ -29,11 +33,39 @@ def parseLot(browser, link):
             expected_conditions.text_to_be_present_in_element((By.XPATH, textXPATH), "Дата начала:")
         )
     finally:
-        res = browser.find_elements_by_xpath(
-            "/html/body/app-root/main/app-lot-item/div/div[1]/section/div[2]/div[2]/div/p[2]/strong |" # дата начала
-            "/html/body/app-root/main/app-lot-item/div/div[1]/section/div[2]/div[3]/div/p[2]/strong |" # дата окончания
-            "/html/body/app-root/main/app-lot-item/div/div[1]/section/div[2]/div[4]/div/p[2]/strong") # Итого стартовая стоимость
+        temp_startDate = browser.find_element_by_xpath("//div[@class='card lot__top-info']/p/strong[@class='text-success mt-3 ']").text  # startDate - дата начала
+        temp_endDate = browser.find_element_by_xpath("//div[@class='card  lot__top-info']/p/strong[@class='text-danger mt-3 ']").text  # endDate - дата окончания
+        temp_startingPrice = browser.find_element_by_xpath("//div[@class='card  lot__top-info ']/p/strong[@class='text-success mt-3 ']").text  # paymentTerm - Итого стартовая стоимость
+        temp_category = browser.find_element_by_xpath("//table[@class='table custom-table-dark--2']/tbody/tr/td[3]").text  # category - категория
+        temp_customerName = browser.find_element_by_xpath("//div[@class='mb-4']/div[2]/div[@class='col-md-7 ']/p/strong"). text  # customerName - Наименование заказчика
+        temp_customerDetails = browser.find_element_by_xpath("//div[@class='mb-4']/div[1]/div[@class='col-md-7 ']/p/strong").text  # customerDetails - реквизиты заказчика
+        temp_deliveryAddress = browser.find_element_by_xpath("//div[@class='mb-4']/div[13]/div[@class='col-md-7 ']/p/strong").text  # deliveryAddress - Адрес поставки
+        temp_customerContact = browser.find_element_by_xpath("//table[@class='table custom-table-dark--2 ']/tbody/tr/th").text  # customerContact
 
-    for i in res:
-        print(i.text)
-    res.clear()
+    currentLot.linkToLot = link
+    currentLot.startDate = temp_startDate
+    currentLot.endDate = temp_endDate
+    currentLot.startingPrice = temp_startingPrice
+    currentLot.category = temp_category
+    currentLot.customerName = temp_customerName
+    currentLot.customerDetails = temp_customerDetails
+    currentLot.deliveryAddress = temp_deliveryAddress
+    currentLot.customerContact = temp_customerContact
+
+    print("lotID\n  ", currentLot.lotID,
+          "\nlinkToLOt\n  ", currentLot.linkToLot,
+          "\ncategory\n  ", currentLot.category,
+          "\nstartDate\n  ", currentLot.startDate,
+          "\nendDate\n  ", currentLot.endDate,
+          "\npurchaseName\n  ", currentLot.purchaseName,
+          "\ncustomerName\n  ", currentLot.customerName,
+          "\ncustomerDetails\n  ", currentLot.customerDetails,
+          "\ncustomerContact\n  ", currentLot.customerContact,
+          "\ncustomerAddress\n  ",
+          "\ndeliveryAddress\n  ", currentLot.deliveryAddress,
+          "\ndeliveryTerm\n  ",
+          "\npaymentTerm\n  ",
+          "\nspecialConditions\n  ",
+          "\nattachedFile\n  ",
+          "\ndescription\n  ",
+          "\nstartingPrice\n  ", currentLot.startingPrice)
