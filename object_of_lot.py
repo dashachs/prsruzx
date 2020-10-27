@@ -2,23 +2,23 @@ class lot:
     def __init__(self, lotID, category, linkToLot, startDate, endDate, purchaseName, customerName, customerDetails,
                  customerContact, customerAddress, deliveryAddress, deliveryTerm, paymentTerm, specialConditions,
                  attachedFile, description, startingPrice):
-        self.lotID = lotID
-        self.category = category
-        self.linkToLot = linkToLot
-        self.startDate = startDate
-        self.endDate = endDate
-        self.purchaseName = purchaseName
-        self.customerName = customerName
-        self.customerDetails = customerDetails
-        self.customerContact = customerContact
-        self.customerAddress = customerAddress
-        self.deliveryAddress = deliveryAddress
-        self.deliveryTerm = deliveryTerm
-        self.paymentTerm = paymentTerm
-        self.specialConditions = specialConditions
-        self.attachedFile = attachedFile
-        self.description = description
-        self.startingPrice = startingPrice
+        self.lotID = lotID  # -ID лота
+        self.category = category  # - Категория +
+        self.linkToLot = linkToLot  # - ссылка на лот
+        self.startDate = startDate  # - дата объявления(когда выставили этот лот) +
+        self.endDate = endDate  # - дата окончания +
+        self.purchaseName = purchaseName  # -Наименование закупки
+        self.customerName = customerName  # -Наименование заказчика +
+        self.customerDetails = customerDetails  # -Реквизиты заказчика
+        self.customerContact = customerContact  # -Контакты заказчика (ответственного лица, контактное лицо)
+        self.customerAddress = customerAddress  # -Адрес заказчика
+        self.deliveryAddress = deliveryAddress  # -Адрес поставки +
+        self.deliveryTerm = deliveryTerm  # -Условия поставки
+        self.paymentTerm = paymentTerm  # -Условия оплаты
+        self.specialConditions = specialConditions  # -Особые условия (условия участия)
+        self.attachedFile = attachedFile  # -Прикреплённый файл(ссылка на скачивание)
+        self.description = description  # -Описание закупки(товар/услуга)
+        self.startingPrice = startingPrice  # - стартовая цена
 
 # Парсер ТЗ:
 # -ID лота
