@@ -13,26 +13,29 @@ browser.get('http://etender.uzex.uz/lots/1/0')
 loadButton = func.find_loadButton(browser)
 func.press_loadButton(loadButton)
 
-# search lot's ID
+# search lot's ID and purchase names
 lotIDs = []
-res = browser.find_elements_by_xpath("//div[@class ='lot-item__num-cat']/div/span")
-for i in res:
-    # print(i.text)
+lotNames = []
+listForIDs = browser.find_elements_by_xpath("//div[@class ='lot-item__num-cat']/div/span")
+listForNames = browser.find_elements_by_xpath("//div[@class='lot-item__title']")
+for i, j in zip(listForIDs, listForNames):
     lotIDs.append(i.text)
+    lotNames.append(j.text)
+
+# clear lists
+listForIDs.clear()
+listForNames.clear()
+
+# create lot's object
+listOfLots = []
 
 # parse lots
-for lotID in lotIDs:
-    link = "http://etender.uzex.uz/lot/" + lotID
-    print(lotID, ": ", link)
+for i in range(len(lotNames)):
+    link = "http://etender.uzex.uz/lot/" + lotIDs[i]
+    listOfLots.append(object_of_lot.lot(lotIDs[i], 1, 1, 1, 1, lotNames[i], 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1))
+    print(listOfLots[i].lotID, ": ", link)
+    print(listOfLots[i].purchaseName)
     func.parseLot(browser, link)
-
-#create lot's object
-listOfLots = []
-for i in range(len(lotIDs)):
-    listOfLots.append(i)
-    listOfLots[i] = object_of_lot.lot(lotIDs[i], 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
-    # нужно добавть заполнить все поля в объекте, или указать значения по умолчанию
-    # это просто пример и он запоминает пока лишь ID лота
 
 # close browser
 browser.quit()

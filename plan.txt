@@ -1,2 +1,3 @@
 Парсинга сайта etender.uzex.uz
+Ссылка на конкурсы: http://etender.uzex.uz/lots/1/0
 
