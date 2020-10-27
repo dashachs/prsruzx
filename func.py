@@ -19,7 +19,8 @@ def press_loadButton(button):
 def parseLot(browser, link):
     browser.get(link)
     print(" parseLot")
-    res = browser.find_elements_by_xpath("//div[@class ='mb-4']/div/div/p |"
+    res = browser.find_elements_by_xpath("//div[@class='row lot__top-infro-wrapper ']/div/div[@class='card lot__top-info']/p |"
+                                         "//div[@class ='mb-4']/div/div/p |"
                                          "//div[@class ='col-md-3 col-lg-2 mb-3']/div[@class ='card lot__top-info']/p |"
                                          "//div[@class ='col-md-3 col-lg-2 mb-3']/div[@class ='card lot__top-info']/p/strong |"
                                          "//div[@class ='col-md-6 col-lg-4 mb-3']/div[@class ='card lot__top-info']/p |"
