@@ -2,6 +2,7 @@ from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions
+from selenium.common.exceptions import TimeoutException
 
 
 def find_loadButton(browser):
@@ -25,71 +26,77 @@ def parseLot(browser, link, currentLot):
     # waiting for page to load
     try:
         textXPATH = "//div[@class='row lot__top-infro-wrapper ']/div/div[@class='card lot__top-info']/p"
-        element = WebDriverWait(browser, 10).until(
+        # setting waiting time
+        wait = WebDriverWait(browser, 10)
+        element = wait.until(
             expected_conditions.text_to_be_present_in_element((By.XPATH, textXPATH), "Дата начала:")
         )
-    except:
-        print("Я хз, кажись это ошибка времени")
-        return -1
+    except TimeoutException:  # https://qna.habr.com/q/641216 - храни их господь
+        print("TimeoutException ig (idk)")
+        return 0
     finally:
-        temp_startDate = browser.find_element_by_xpath(
-            "//div[@class='card lot__top-info']/p/strong[@class='text-success mt-3 ']").text  # startDate - дата начала
-        temp_endDate = browser.find_element_by_xpath(
-            "//div[@class='card  lot__top-info']/p/strong[@class='text-danger mt-3 ']").text  # endDate - дата окончания
-        temp_startingPrice = browser.find_element_by_xpath(
-            "//div[@class='card  lot__top-info ']/p/strong[@class='text-success mt-3 ']").text  # paymentTerm - Итого стартовая стоимость
-        temp_category = browser.find_element_by_xpath(
-            "//table[@class='table custom-table-dark--2']/tbody/tr/td[3]").text  # category - категория
-        temp_customerName = browser.find_element_by_xpath(
-            "//div[@class='mb-4']/div[2]/div[@class='col-md-7 ']/p/strong").text  # customerName - Наименование заказчика
-        temp_customerDetails = browser.find_element_by_xpath(
-            "//div[@class='mb-4']/div[1]/div[@class='col-md-7 ']/p/strong").text  # customerDetails - реквизиты заказчика
-        temp_deliveryAddress = browser.find_element_by_xpath(
-            "//div[@class='mb-4']/div[13]/div[@class='col-md-7 ']/p/strong").text  # deliveryAddress - Адрес поставки
-        temp_customerContact = browser.find_element_by_xpath(
-            "//table[@class='table custom-table-dark--2 ']/tbody/tr/th").text + ", " + \
-                               browser.find_element_by_xpath(
-                                   "//table[@class='table custom-table-dark--2 ']/tbody/tr/td").text  # customerContact - Контакты заказчика (ответственного лица, контактное лицо)
-        temp_paymentTerm = browser.find_element_by_xpath(
-            "//div[@class='mb-4']/div[6]/div[@class='col-md-5 text-md-right']/p").text + \
+        fillInLot(browser, link, currentLot)
+
+
+def fillInLot(browser, link, currentLot):
+    temp_category = browser.find_element_by_xpath(
+        "//table[@class='table custom-table-dark--2']/tbody/tr/td[3]").text  # category - категория
+    temp_startDate = browser.find_element_by_xpath(
+        "//div[@class='card lot__top-info']/p/strong[@class='text-success mt-3 ']").text  # startDate - дата начала
+    temp_endDate = browser.find_element_by_xpath(
+        "//div[@class='card  lot__top-info']/p/strong[@class='text-danger mt-3 ']").text  # endDate - дата окончания
+    temp_customerName = browser.find_element_by_xpath(
+        "//div[@class='mb-4']/div[2]/div[@class='col-md-7 ']/p/strong").text  # customerName - Наименование заказчика
+    temp_customerDetails = browser.find_element_by_xpath(
+        "//div[@class='mb-4']/div[1]/div[@class='col-md-7 ']/p/strong").text  # customerDetails - реквизиты заказчика
+    temp_customerContact = browser.find_element_by_xpath(
+        "//table[@class='table custom-table-dark--2 ']/tbody/tr/th").text + ", " + \
                            browser.find_element_by_xpath(
-                               "//div[@class='mb-4']/div[6]/div[@class='col-md-7 ']/p/strong").text + ";\n  " + \
-                           browser.find_element_by_xpath(
-                               "//div[@class='mb-4']/div[7]/div[@class='col-md-5 text-md-right']/p").text + \
-                           browser.find_element_by_xpath(
-                               "//div[@class='mb-4']/div[7]/div[@class='col-md-7 ']/p/strong").text + ";\n  " + \
-                           browser.find_element_by_xpath(
-                               "//div[@class='mb-4']/div[8]/div[@class='col-md-5 text-md-right']/p").text + \
-                           browser.find_element_by_xpath(
-                               "//div[@class='mb-4']/div[8]/div[@class='col-md-7 ']/p/strong").text + ";\n  " + \
-                           browser.find_element_by_xpath(
-                               "//div[@class='mb-4']/div[9]/div[@class='col-md-5 text-md-right']/p").text + \
-                           browser.find_element_by_xpath(
-                               "//div[@class='mb-4']/div[9]/div[@class='col-md-7 ']/p/strong").text + ";\n  " + \
-                           browser.find_element_by_xpath(
-                               "//div[@class='mb-4']/div[12]/div[@class='col-md-5 text-md-right']/p").text + \
-                           browser.find_element_by_xpath(
-                               "//div[@class='mb-4']/div[12]/div[@class='col-md-7 ']/p/strong").text  # paymentTerm - Условия оплаты
-        temp_description = browser.find_element_by_xpath("//div[@class='lot__products__item__footer']/p").text.replace(
-            'Подробное описание: ', '')  # description
-        temp_deliveryTerm = browser.find_element_by_xpath(
-            "//table[@class='table custom-table-dark--2']/tbody/tr/td[7]").text  # deliveryTerm
-        temp_specialConditions = browser.find_element_by_xpath(
-            "//*[@id='lot-details-tab-content-1']/div/div[@class='mb-4']/p").text  # specialConditions
+                               "//table[@class='table custom-table-dark--2 ']/tbody/tr/td").text  # customerContact - Контакты заказчика
+    temp_deliveryAddress = browser.find_element_by_xpath(
+        "//div[@class='mb-4']/div[13]/div[@class='col-md-7 ']/p/strong").text  # deliveryAddress - Адрес поставки
+    temp_deliveryTerm = browser.find_element_by_xpath(
+        "//table[@class='table custom-table-dark--2']/tbody/tr/td[7]").text  # deliveryTerm
+    temp_paymentTerm = browser.find_element_by_xpath(
+        "//div[@class='mb-4']/div[6]/div[@class='col-md-5 text-md-right']/p").text + \
+                       browser.find_element_by_xpath(
+                           "//div[@class='mb-4']/div[6]/div[@class='col-md-7 ']/p/strong").text + ";\n  " + \
+                       browser.find_element_by_xpath(
+                           "//div[@class='mb-4']/div[7]/div[@class='col-md-5 text-md-right']/p").text + \
+                       browser.find_element_by_xpath(
+                           "//div[@class='mb-4']/div[7]/div[@class='col-md-7 ']/p/strong").text + ";\n  " + \
+                       browser.find_element_by_xpath(
+                           "//div[@class='mb-4']/div[8]/div[@class='col-md-5 text-md-right']/p").text + \
+                       browser.find_element_by_xpath(
+                           "//div[@class='mb-4']/div[8]/div[@class='col-md-7 ']/p/strong").text + ";\n  " + \
+                       browser.find_element_by_xpath(
+                           "//div[@class='mb-4']/div[9]/div[@class='col-md-5 text-md-right']/p").text + \
+                       browser.find_element_by_xpath(
+                           "//div[@class='mb-4']/div[9]/div[@class='col-md-7 ']/p/strong").text + ";\n  " + \
+                       browser.find_element_by_xpath(
+                           "//div[@class='mb-4']/div[12]/div[@class='col-md-5 text-md-right']/p").text + \
+                       browser.find_element_by_xpath(
+                           "//div[@class='mb-4']/div[12]/div[@class='col-md-7 ']/p/strong").text  # paymentTerm - Условия оплаты
+    temp_specialConditions = browser.find_element_by_xpath(
+        "//*[@id='lot-details-tab-content-1']/div/div[@class='mb-4']/p").text  # specialConditions
+    temp_description = browser.find_element_by_xpath("//div[@class='lot__products__item__footer']/p").text.replace(
+        'Подробное описание: ', '')  # description
+    temp_startingPrice = browser.find_element_by_xpath(
+        "//div[@class='card  lot__top-info ']/p/strong[@class='text-success mt-3 ']").text  # paymentTerm - Стартовая стоимость
 
     currentLot.linkToLot = link
+    currentLot.category = temp_category
     currentLot.startDate = temp_startDate
     currentLot.endDate = temp_endDate
-    currentLot.startingPrice = temp_startingPrice
-    currentLot.category = temp_category
     currentLot.customerName = temp_customerName
     currentLot.customerDetails = temp_customerDetails
-    currentLot.deliveryAddress = temp_deliveryAddress
     currentLot.customerContact = temp_customerContact
-    currentLot.paymentTerm = temp_paymentTerm
-    currentLot.description = temp_description
+    currentLot.deliveryAddress = temp_deliveryAddress
     currentLot.deliveryTerm = temp_deliveryTerm
+    currentLot.paymentTerm = temp_paymentTerm
     currentLot.specialConditions = temp_specialConditions
+    currentLot.description = temp_description
+    currentLot.startingPrice = temp_startingPrice
 
     print("lotID\n  ", currentLot.lotID,
           "\nlinkToLOt\n  ", currentLot.linkToLot,
