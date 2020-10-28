@@ -1,7 +1,8 @@
 class lot:
-    def __init__(self, lotID, category, linkToLot, startDate, endDate, purchaseName, customerName, customerDetails,
-                 customerContact, customerAddress, deliveryAddress, deliveryTerm, paymentTerm, specialConditions,
-                 attachedFile, description, startingPrice):
+    def __init__(self, lotID='-', category='-', linkToLot='-', startDate='-', endDate='-', purchaseName='-',
+                 customerName='-', customerDetails='-', customerContact='-', customerAddress='-', deliveryAddress='-',
+                 deliveryTerm='-', paymentTerm='-', specialConditions='-', attachedFile='-', description='-',
+                 startingPrice='-'):
         self.lotID = lotID  # -ID лота
         self.category = category  # - Категория +
         self.linkToLot = linkToLot  # - ссылка на лот

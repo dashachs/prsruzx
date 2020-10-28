@@ -39,65 +39,60 @@ def parseLot(browser, link, currentLot):
 
 
 def fillInLot(browser, link, currentLot):
-    temp_category = browser.find_element_by_xpath(
-        "//table[@class='table custom-table-dark--2']/tbody/tr/td[3]").text  # category - категория
-    temp_startDate = browser.find_element_by_xpath(
+    currentLot.category = browser.find_element_by_xpath(
+        "//div[@class='mb-4']/div[3]/div[@class='col-md-7 ']/p/strong").text  # category - категория
+    currentLot.startDate = browser.find_element_by_xpath(
         "//div[@class='card lot__top-info']/p/strong[@class='text-success mt-3 ']").text  # startDate - дата начала
-    temp_endDate = browser.find_element_by_xpath(
+    currentLot.endDate = browser.find_element_by_xpath(
         "//div[@class='card  lot__top-info']/p/strong[@class='text-danger mt-3 ']").text  # endDate - дата окончания
-    temp_customerName = browser.find_element_by_xpath(
+    currentLot.customerName = browser.find_element_by_xpath(
         "//div[@class='mb-4']/div[2]/div[@class='col-md-7 ']/p/strong").text  # customerName - Наименование заказчика
-    temp_customerDetails = browser.find_element_by_xpath(
+    currentLot.customerDetails = "ИНН: " + browser.find_element_by_xpath(
         "//div[@class='mb-4']/div[1]/div[@class='col-md-7 ']/p/strong").text  # customerDetails - реквизиты заказчика
-    temp_customerContact = browser.find_element_by_xpath(
+    currentLot.customerContact = browser.find_element_by_xpath(
         "//table[@class='table custom-table-dark--2 ']/tbody/tr/th").text + ", " + \
-                           browser.find_element_by_xpath(
-                               "//table[@class='table custom-table-dark--2 ']/tbody/tr/td").text  # customerContact - Контакты заказчика
-    temp_deliveryAddress = browser.find_element_by_xpath(
+                                 browser.find_element_by_xpath(
+                                     "//table[@class='table custom-table-dark--2 ']/tbody/tr/td").text  # customerContact - Контакты заказчика
+    currentLot.deliveryAddress = browser.find_element_by_xpath(
         "//div[@class='mb-4']/div[13]/div[@class='col-md-7 ']/p/strong").text  # deliveryAddress - Адрес поставки
-    temp_deliveryTerm = browser.find_element_by_xpath(
+    currentLot.deliveryTerm = browser.find_element_by_xpath(
         "//table[@class='table custom-table-dark--2']/tbody/tr/td[7]").text  # deliveryTerm
-    temp_paymentTerm = browser.find_element_by_xpath(
+    currentLot.paymentTerm = browser.find_element_by_xpath(
         "//div[@class='mb-4']/div[6]/div[@class='col-md-5 text-md-right']/p").text + \
-                       browser.find_element_by_xpath(
-                           "//div[@class='mb-4']/div[6]/div[@class='col-md-7 ']/p/strong").text + ";\n  " + \
-                       browser.find_element_by_xpath(
-                           "//div[@class='mb-4']/div[7]/div[@class='col-md-5 text-md-right']/p").text + \
-                       browser.find_element_by_xpath(
-                           "//div[@class='mb-4']/div[7]/div[@class='col-md-7 ']/p/strong").text + ";\n  " + \
-                       browser.find_element_by_xpath(
-                           "//div[@class='mb-4']/div[8]/div[@class='col-md-5 text-md-right']/p").text + \
-                       browser.find_element_by_xpath(
-                           "//div[@class='mb-4']/div[8]/div[@class='col-md-7 ']/p/strong").text + ";\n  " + \
-                       browser.find_element_by_xpath(
-                           "//div[@class='mb-4']/div[9]/div[@class='col-md-5 text-md-right']/p").text + \
-                       browser.find_element_by_xpath(
-                           "//div[@class='mb-4']/div[9]/div[@class='col-md-7 ']/p/strong").text + ";\n  " + \
-                       browser.find_element_by_xpath(
-                           "//div[@class='mb-4']/div[12]/div[@class='col-md-5 text-md-right']/p").text + \
-                       browser.find_element_by_xpath(
-                           "//div[@class='mb-4']/div[12]/div[@class='col-md-7 ']/p/strong").text  # paymentTerm - Условия оплаты
-    temp_specialConditions = browser.find_element_by_xpath(
+                             browser.find_element_by_xpath(
+                                 "//div[@class='mb-4']/div[6]/div[@class='col-md-7 ']/p/strong").text + ";\n  " + \
+                             browser.find_element_by_xpath(
+                                 "//div[@class='mb-4']/div[7]/div[@class='col-md-5 text-md-right']/p").text + \
+                             browser.find_element_by_xpath(
+                                 "//div[@class='mb-4']/div[7]/div[@class='col-md-7 ']/p/strong").text + ";\n  " + \
+                             browser.find_element_by_xpath(
+                                 "//div[@class='mb-4']/div[8]/div[@class='col-md-5 text-md-right']/p").text + \
+                             browser.find_element_by_xpath(
+                                 "//div[@class='mb-4']/div[8]/div[@class='col-md-7 ']/p/strong").text + ";\n  " + \
+                             browser.find_element_by_xpath(
+                                 "//div[@class='mb-4']/div[9]/div[@class='col-md-5 text-md-right']/p").text.replace(
+                                 '::', ':') + \
+                             browser.find_element_by_xpath(
+                                 "//div[@class='mb-4']/div[9]/div[@class='col-md-7 ']/p/strong").text + ";\n  " + \
+                             browser.find_element_by_xpath(
+                                 "//div[@class='mb-4']/div[12]/div[@class='col-md-5 text-md-right']/p").text + \
+                             browser.find_element_by_xpath(
+                                 "//div[@class='mb-4']/div[12]/div[@class='col-md-7 ']/p/strong").text  # paymentTerm - Условия оплаты
+    currentLot.specialConditions = browser.find_element_by_xpath(
         "//*[@id='lot-details-tab-content-1']/div/div[@class='mb-4']/p").text  # specialConditions
-    temp_description = browser.find_element_by_xpath("//div[@class='lot__products__item__footer']/p").text.replace(
-        'Подробное описание: ', '')  # description
-    temp_startingPrice = browser.find_element_by_xpath(
-        "//div[@class='card  lot__top-info ']/p/strong[@class='text-success mt-3 ']").text  # paymentTerm - Стартовая стоимость
-
+    currentLot.description = browser.find_element_by_xpath(
+        "//div[@class='lot__products__item']/h5[@class='text-primary mb-3']").text.replace(
+        '1 - ', '')  # description
+    currentLot.startingPrice = int(browser.find_element_by_xpath(
+        "//div[@class='card  lot__top-info ']/p/strong[@class='text-success mt-3 ']").text.replace(' UZS', '').replace(
+        ' ', ''))  # paymentTerm - Стартовая стоимость
     currentLot.linkToLot = link
-    currentLot.category = temp_category
-    currentLot.startDate = temp_startDate
-    currentLot.endDate = temp_endDate
-    currentLot.customerName = temp_customerName
-    currentLot.customerDetails = temp_customerDetails
-    currentLot.customerContact = temp_customerContact
-    currentLot.deliveryAddress = temp_deliveryAddress
-    currentLot.deliveryTerm = temp_deliveryTerm
-    currentLot.paymentTerm = temp_paymentTerm
-    currentLot.specialConditions = temp_specialConditions
-    currentLot.description = temp_description
-    currentLot.startingPrice = temp_startingPrice
 
+    # printing lot information (temp)
+    printLotInfo(currentLot)
+
+
+def printLotInfo(currentLot):  # temp
     print("lotID\n  ", currentLot.lotID,
           "\nlinkToLOt\n  ", currentLot.linkToLot,
           "\ncategory\n  ", currentLot.category,
@@ -112,6 +107,6 @@ def fillInLot(browser, link, currentLot):
           "\ndeliveryTerm\n  ", currentLot.deliveryTerm,
           "\npaymentTerm\n ", currentLot.paymentTerm,
           "\nspecialConditions\n  ", currentLot.specialConditions,
-          "\nattachedFile\n  ",
+          "\nattachedFile\n  ", currentLot.attachedFile,
           "\ndescription\n  ", currentLot.description,
           "\nstartingPrice\n  ", currentLot.startingPrice)
