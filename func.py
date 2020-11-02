@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 from selenium.common.exceptions import TimeoutException
+from dbUser import getCategoryId
 
 
 def find_loadButton(browser):
@@ -80,7 +81,8 @@ def fillInLot(browser, link, currentLot):
             break
         currentLot.currency = tempForPrice[num] + currentLot.currency
     currentLot.currency = currentLot.currency.replace('-', '')  # -валюта
-    currentLot.startingPrice = int((tempForPrice.replace(' ', '')).replace(currentLot.currency, ''))  # -Стартовая стоимость
+    currentLot.startingPrice = int(
+        (tempForPrice.replace(' ', '')).replace(currentLot.currency, ''))  # -Стартовая стоимость
     currentLot.linkToLot = link
 
     tempForAddress = currentLot.customerAddress.split(",")
@@ -89,6 +91,7 @@ def fillInLot(browser, link, currentLot):
 
     # printing lot information (temp)
     printLotInfo(currentLot)
+
 
 def printLotInfo(currentLot):  # temp
     print("lotID\n  ", currentLot.lotID,

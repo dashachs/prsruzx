@@ -41,10 +41,21 @@ def getCategoryId(con, requierd):
     rows = cur.fetchall()
     for row in rows:
         if row[1].lower().replace(' ', '') == requierd.lower().replace(' ', ''):
+            print("getCategoryId done successfully: ID =", row[0])
             return row[0]
-    print("getCategoryId done successfully")
+    print("getCategoryId done unsuccessfully")
+
+def getCurrencyId(con, requierd):
+    cur = con.cursor()
+    cur.execute("SELECT id, slug FROM finance_currencies")
+    rows = cur.fetchall()
+    for row in rows:
+        if row[1].upper().replace(' ', '') == requierd.upper().replace(' ', ''):
+            print("getCurrencyId done successfully: ID =", row[0])
+            return row[0]
+    print("getCurrencyId done unsuccessfully")
 
 
-res = getCategoryId(con, 'ЮридичеСкИе   услу г  и')
-print(res)
+res = getCategoryId(con, 'У с лу ги ')
+res2 = getCurrencyId(con, "UZS")
 con.close()
