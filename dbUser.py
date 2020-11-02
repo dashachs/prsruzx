@@ -33,6 +33,7 @@ def getCategoryId(con, requierd):
             print("getCategoryId done successfully")
             return row[0]
     print("getCategoryId didn't find name")
+    return -1
 
 def getCurrencyId(con, requierd):
     cur = con.cursor()
@@ -43,6 +44,7 @@ def getCurrencyId(con, requierd):
             print("getCurrencyId done successfully", requierd, "ID =", row[0])
             return row[0]
     print("getCurrencyId didn't find name")
+    return -1
 
 def getRegionId(con, requierd):
     cur = con.cursor()
@@ -53,6 +55,7 @@ def getRegionId(con, requierd):
             print("getRegionId done successfully")
             return row[0]
     print("getRegionId didn't find name")
+    return -1
 
 def getAreaId(con, requierd):
     cur = con.cursor()
@@ -63,3 +66,4 @@ def getAreaId(con, requierd):
             print("getAreaId done successfully")
             return row[0]
     print("getAreaId didn't find name")
+    return -1
