@@ -40,7 +40,8 @@ def parseLot(browser, link, currentLot):
 
 def fillInLot(browser, link, currentLot):
     currentLot.category = browser.find_element_by_xpath(
-        "//div[@class='mb-4']/div[3]/div[@class='col-md-7 ']/p/strong").text  # category - категория
+        # "//div[@class='mb-4']/div[3]/div[@class='col-md-7 ']/p/strong").text  # category - категория
+        "//table[@class='table custom-table-dark--2']/tbody/tr/td[3]").text  # category - категория
     currentLot.startDate = browser.find_element_by_xpath(
         "//div[@class='card lot__top-info']/p/strong[@class='text-success mt-3 ']").text  # startDate - дата начала
     currentLot.endDate = browser.find_element_by_xpath(
@@ -57,40 +58,34 @@ def fillInLot(browser, link, currentLot):
         "//div[@class='mb-4']/div[13]/div[@class='col-md-7 ']/p/strong").text  # deliveryAddress - Адрес поставки
     currentLot.deliveryTerm = browser.find_element_by_xpath(
         "//table[@class='table custom-table-dark--2']/tbody/tr/td[7]").text  # deliveryTerm
-    currentLot.paymentTerm = browser.find_element_by_xpath(
-        "//div[@class='mb-4']/div[6]/div[@class='col-md-5 text-md-right']/p").text + \
-                             browser.find_element_by_xpath(
-                                 "//div[@class='mb-4']/div[6]/div[@class='col-md-7 ']/p/strong").text + ";\n  " + \
-                             browser.find_element_by_xpath(
-                                 "//div[@class='mb-4']/div[7]/div[@class='col-md-5 text-md-right']/p").text + \
-                             browser.find_element_by_xpath(
-                                 "//div[@class='mb-4']/div[7]/div[@class='col-md-7 ']/p/strong").text + ";\n  " + \
-                             browser.find_element_by_xpath(
-                                 "//div[@class='mb-4']/div[8]/div[@class='col-md-5 text-md-right']/p").text + \
-                             browser.find_element_by_xpath(
-                                 "//div[@class='mb-4']/div[8]/div[@class='col-md-7 ']/p/strong").text + ";\n  " + \
-                             browser.find_element_by_xpath(
-                                 "//div[@class='mb-4']/div[9]/div[@class='col-md-5 text-md-right']/p").text.replace(
-                                 '::', ':') + \
-                             browser.find_element_by_xpath(
-                                 "//div[@class='mb-4']/div[9]/div[@class='col-md-7 ']/p/strong").text + ";\n  " + \
-                             browser.find_element_by_xpath(
-                                 "//div[@class='mb-4']/div[12]/div[@class='col-md-5 text-md-right']/p").text + \
-                             browser.find_element_by_xpath(
-                                 "//div[@class='mb-4']/div[12]/div[@class='col-md-7 ']/p/strong").text  # paymentTerm - Условия оплаты
+    currentLot.deposit = browser.find_element_by_xpath(
+        "//div[@class='mb-4']/div[6]/div[@class='col-md-7 ']/p/strong").text  # -задаток
+    currentLot.depositPayment = browser.find_element_by_xpath(
+        "//div[@class='mb-4']/div[7]/div[@class='col-md-7 ']/p/strong").text  # - Размер задатка
+    currentLot.advancePayment = browser.find_element_by_xpath(
+        "//div[@class='mb-4']/div[8]/div[@class='col-md-7 ']/p/strong").text  # -Размер авансового платежа
+    currentLot.paymentMethod = browser.find_element_by_xpath(
+        "//div[@class='mb-4']/div[9]/div[@class='col-md-7 ']/p/strong").text  # -Порядок оплаты
+    currentLot.paymentPeriod = browser.find_element_by_xpath(
+        "//div[@class='mb-4']/div[12]/div[@class='col-md-7 ']/p/strong").text  # -Срок расчета (полной оплаты)
     currentLot.specialConditions = browser.find_element_by_xpath(
         "//*[@id='lot-details-tab-content-1']/div/div[@class='mb-4']/p").text  # specialConditions
     currentLot.description = browser.find_element_by_xpath(
-        "//div[@class='lot__products__item']/h5[@class='text-primary mb-3']").text.replace(
-        '1 - ', '')  # description
-    currentLot.startingPrice = int(browser.find_element_by_xpath(
-        "//div[@class='card  lot__top-info ']/p/strong[@class='text-success mt-3 ']").text.replace(' UZS', '').replace(
-        ' ', ''))  # paymentTerm - Стартовая стоимость
+        "//div[@class='lot__products__item']/h5[@class='text-primary mb-3']").text.replace('1 - ', '')  # description
+    tempForPrice = browser.find_element_by_xpath(
+        "//div[@class='card  lot__top-info ']/p/strong[@class='text-success mt-3 ']").text
+    for i in range(len(tempForPrice)):
+        num = len(tempForPrice) - i - 1
+        if tempForPrice[num] == ' ':
+            break
+        currentLot.currency = tempForPrice[num] + currentLot.currency
+    currentLot.currency = currentLot.currency.replace('-', '')  # -валюта
+    currentLot.startingPrice = int((tempForPrice.replace(' ', '')).replace(currentLot.currency, ''))  # -Стартовая стоимость
+
     currentLot.linkToLot = link
 
     # printing lot information (temp)
     printLotInfo(currentLot)
-
 
 def printLotInfo(currentLot):  # temp
     print("lotID\n  ", currentLot.lotID,
@@ -98,6 +93,7 @@ def printLotInfo(currentLot):  # temp
           "\ncategory\n  ", currentLot.category,
           "\nstartDate\n  ", currentLot.startDate,
           "\nendDate\n  ", currentLot.endDate,
+          "\nstatus\n  ", currentLot.status,
           "\npurchaseName\n  ", currentLot.purchaseName,
           "\ncustomerName\n  ", currentLot.customerName,
           "\ncustomerDetails\n  ", currentLot.customerDetails,
@@ -105,8 +101,13 @@ def printLotInfo(currentLot):  # temp
           "\ncustomerAddress\n  ", currentLot.customerAddress,
           "\ndeliveryAddress\n  ", currentLot.deliveryAddress,
           "\ndeliveryTerm\n  ", currentLot.deliveryTerm,
-          "\npaymentTerm\n ", currentLot.paymentTerm,
+          "\ndeposit\n  ", currentLot.deposit,
+          "\ndepositPayment\n  ", currentLot.depositPayment,
+          "\nadvancePayment\n  ", currentLot.advancePayment,
+          "\npaymentMethod\n  ", currentLot.paymentMethod,
+          "\npaymentPeriod\n  ", currentLot.paymentPeriod,
           "\nspecialConditions\n  ", currentLot.specialConditions,
           "\nattachedFile\n  ", currentLot.attachedFile,
           "\ndescription\n  ", currentLot.description,
-          "\nstartingPrice\n  ", currentLot.startingPrice)
+          "\nstartingPrice\n  ", currentLot.startingPrice,
+          "\ncurrency\n  ", currentLot.currency)
