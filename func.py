@@ -81,8 +81,11 @@ def fillInLot(browser, link, currentLot):
         currentLot.currency = tempForPrice[num] + currentLot.currency
     currentLot.currency = currentLot.currency.replace('-', '')  # -валюта
     currentLot.startingPrice = int((tempForPrice.replace(' ', '')).replace(currentLot.currency, ''))  # -Стартовая стоимость
-
     currentLot.linkToLot = link
+
+    tempForAddress = currentLot.customerAddress.split(",")
+    currentLot.customerAddressRegion = tempForAddress[0]
+    currentLot.customerAddressArea = tempForAddress[1]
 
     # printing lot information (temp)
     printLotInfo(currentLot)
@@ -98,7 +101,8 @@ def printLotInfo(currentLot):  # temp
           "\ncustomerName\n  ", currentLot.customerName,
           "\ncustomerDetails\n  ", currentLot.customerDetails,
           "\ncustomerContact\n  ", currentLot.customerContact,
-          "\ncustomerAddress\n  ", currentLot.customerAddress,
+          "\ncustomerAddressRegion\n  ", currentLot.customerAddressRegion,
+          "\ncustomerAddressArea\n  ", currentLot.customerAddressArea,
           "\ndeliveryAddress\n  ", currentLot.deliveryAddress,
           "\ndeliveryTerm\n  ", currentLot.deliveryTerm,
           "\ndeposit\n  ", currentLot.deposit,
