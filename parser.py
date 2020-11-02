@@ -1,6 +1,8 @@
 from selenium import webdriver
+import psycopg2
 import func
 import object_of_lot
+import dbUser
 
 options = webdriver.ChromeOptions()
 options.add_argument('--headless')
@@ -46,3 +48,13 @@ for i in range(len(lotNames)):
 
 # close browser
 browser.quit()
+
+# database input
+con = psycopg2.connect(
+        database="postgres",
+        user="anwar",
+        password="etender.uz",
+        host="database-rds.cbs8omqsohea.eu-west-3.rds.amazonaws.com",
+        port="5432"
+    )
+print("Database opened successfully")

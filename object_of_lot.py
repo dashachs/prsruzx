@@ -7,8 +7,8 @@ class lot:
         self.lotID = lotID  # -ID лота
         self.category = category  # - Категория +
         self.linkToLot = linkToLot  # - ссылка на лот
-        self.startDate = startDate  # - дата объявления(когда выставили этот лот) +
-        self.endDate = endDate  # - дата окончания +
+        self.startedAt = startDate  # - дата объявления(когда выставили этот лот) +
+        self.endedAt = endDate  # - дата окончания +
         self.status = status  # status — (relevant/expired)
         self.purchaseName = purchaseName  # -Наименование закупки
         self.customerName = customerName  # -Наименование заказчика +

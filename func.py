@@ -42,10 +42,10 @@ def fillInLot(browser, link, currentLot):
     currentLot.category = browser.find_element_by_xpath(
         # "//div[@class='mb-4']/div[3]/div[@class='col-md-7 ']/p/strong").text  # category - категория
         "//table[@class='table custom-table-dark--2']/tbody/tr/td[3]").text  # category - категория
-    currentLot.startDate = browser.find_element_by_xpath(
-        "//div[@class='card lot__top-info']/p/strong[@class='text-success mt-3 ']").text  # startDate - дата начала
-    currentLot.endDate = browser.find_element_by_xpath(
-        "//div[@class='card  lot__top-info']/p/strong[@class='text-danger mt-3 ']").text  # endDate - дата окончания
+    currentLot.startedAt = browser.find_element_by_xpath(
+        "//div[@class='card lot__top-info']/p/strong[@class='text-success mt-3 ']").text  # startedAt - дата начала
+    currentLot.endedAt = browser.find_element_by_xpath(
+        "//div[@class='card  lot__top-info']/p/strong[@class='text-danger mt-3 ']").text  # endedAt - дата окончания
     currentLot.customerName = browser.find_element_by_xpath(
         "//div[@class='mb-4']/div[2]/div[@class='col-md-7 ']/p/strong").text  # customerName - Наименование заказчика
     currentLot.customerDetails = "ИНН: " + browser.find_element_by_xpath(
@@ -94,8 +94,8 @@ def printLotInfo(currentLot):  # temp
     print("lotID\n  ", currentLot.lotID,
           "\nlinkToLOt\n  ", currentLot.linkToLot,
           "\ncategory\n  ", currentLot.category,
-          "\nstartDate\n  ", currentLot.startDate,
-          "\nendDate\n  ", currentLot.endDate,
+          "\nstartedAt\n  ", currentLot.startedAt,
+          "\nendedAt\n  ", currentLot.endedAt,
           "\nstatus\n  ", currentLot.status,
           "\npurchaseName\n  ", currentLot.purchaseName,
           "\ncustomerName\n  ", currentLot.customerName,
