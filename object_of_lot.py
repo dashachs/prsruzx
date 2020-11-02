@@ -1,20 +1,22 @@
 class lot:
-    def __init__(self, lotID='-', category='-', linkToLot='-', startDate='-', endDate='-', status='relevant', purchaseName='-',
-                 customerName='-', customerDetails='-', customerContact='-', customerAddress='-', deliveryAddress='-',
-                 deliveryTerm='-', deposit='-', depositPayment='-', advancePayment='-',
-                 paymentMethod='-', paymentPeriod='-', specialConditions='-', attachedFile='-', description='-',
-                 startingPrice='-', currency='-'):
+    def __init__(self, lotID='-', category='-', linkToLot='-', startDate='-', endDate='-', status='relevant',
+                 purchaseName='-', customerName='-', customerDetails='-', customerContact='-', customerAddress='-',
+                 customerAddressRegion='-', customerAddressArea = '-', deliveryAddress='-', deliveryTerm='-',
+                 deposit='-', depositPayment='-', advancePayment='-', paymentMethod='-', paymentPeriod='-',
+                 specialConditions='-', attachedFile='-', description='-', startingPrice='-', currency='-'):
         self.lotID = lotID  # -ID лота
         self.category = category  # - Категория +
         self.linkToLot = linkToLot  # - ссылка на лот
         self.startDate = startDate  # - дата объявления(когда выставили этот лот) +
         self.endDate = endDate  # - дата окончания +
-        self.status = status  #status — (relevant/expired)
+        self.status = status  # status — (relevant/expired)
         self.purchaseName = purchaseName  # -Наименование закупки
         self.customerName = customerName  # -Наименование заказчика +
         self.customerDetails = customerDetails  # -Реквизиты заказчика
         self.customerContact = customerContact  # -Контакты заказчика (ответственного лица, контактное лицо)
         self.customerAddress = customerAddress  # -Адрес заказчика
+        self.customerAddressRegion = customerAddressRegion  # -Адрес заказчика (region)
+        self.customerAddressArea = customerAddressArea   # -Адрес заказчика (area)
         self.deliveryAddress = deliveryAddress  # -Адрес поставки +
         self.deliveryTerm = deliveryTerm  # -Условия поставки
         self.deposit = deposit  # -задаток
