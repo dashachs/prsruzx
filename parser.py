@@ -58,3 +58,7 @@ con = psycopg2.connect(
         port="5432"
     )
 print("Database opened successfully")
+
+
+#close DB
+con.close()

@@ -1,14 +1,3 @@
-import psycopg2
-
-con = psycopg2.connect(
-        database="postgres",
-        user="anwar",
-        password="etender.uz",
-        host="database-rds.cbs8omqsohea.eu-west-3.rds.amazonaws.com",
-        port="5432"
-    )
-print("Database opened successfully")
-
 # def inputToDB(con):
 #     cur = con.cursor()
 #     cur.execute(
@@ -41,9 +30,9 @@ def getCategoryId(con, requierd):
     rows = cur.fetchall()
     for row in rows:
         if row[1].lower().replace(' ', '') == requierd.lower().replace(' ', ''):
-            print("getCategoryId done successfully", requierd.lower(), "ID =", row[0])
+            print("getCategoryId done successfully")
             return row[0]
-    print("getCurrencyId didn't find name")
+    print("getCategoryId didn't find name")
 
 def getCurrencyId(con, requierd):
     cur = con.cursor()
@@ -51,11 +40,26 @@ def getCurrencyId(con, requierd):
     rows = cur.fetchall()
     for row in rows:
         if row[1].upper().replace(' ', '') == requierd.upper().replace(' ', ''):
-            print("getCurrencyId done successfully", requierd.upper(), "ID =", row[0])
+            print("getCurrencyId done successfully", requierd, "ID =", row[0])
             return row[0]
     print("getCurrencyId didn't find name")
 
+def getRegionId(con, requierd):
+    cur = con.cursor()
+    cur.execute("SELECT region_id, name FROM geo_regions_translations")
+    rows = cur.fetchall()
+    for row in rows:
+        if row[1].lower().replace(' ', '') == requierd.lower().replace(' ', ''):
+            print("getRegionId done successfully")
+            return row[0]
+    print("getRegionId didn't find name")
 
-res = getCategoryId(con, 'ЮридичеСкИе   услу г  и')
-res2 = getCurrencyId(con, 'UZs')
-con.close()
+def getAreaId(con, requierd):
+    cur = con.cursor()
+    cur.execute("SELECT area_id, name FROM geo_areas_translations")
+    rows = cur.fetchall()
+    for row in rows:
+        if row[1].lower().replace(' ', '') == requierd.lower().replace(' ', ''):
+            print("getAreaId done successfully")
+            return row[0]
+    print("getAreaId didn't find name")
