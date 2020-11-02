@@ -41,9 +41,9 @@ def getCategoryId(con, requierd):
     rows = cur.fetchall()
     for row in rows:
         if row[1].lower().replace(' ', '') == requierd.lower().replace(' ', ''):
-            print("getCategoryId done successfully", requierd, "ID =", row[0])
+            print("getCategoryId done successfully")
             return row[0]
-    print("getCategoryId done unsuccessfully")
+    print("getCurrencyId didn't find name")
 
 def getCurrencyId(con, requierd):
     cur = con.cursor()
@@ -53,9 +53,9 @@ def getCurrencyId(con, requierd):
         if row[1].upper().replace(' ', '') == requierd.upper().replace(' ', ''):
             print("getCurrencyId done successfully", requierd, "ID =", row[0])
             return row[0]
-    print("getCurrencyId done unsuccessfully")
+    print("getCurrencyId didn't find name")
 
 
-res = getCategoryId(con, 'У с лу ги ')
-res2 = getCurrencyId(con, "UZS")
+res = getCategoryId(con, 'ЮридичеСкИе   услу г  и')
+print(res)
 con.close()
