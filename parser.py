@@ -41,6 +41,7 @@ for i in range(len(lotNames)):
     # adding new lot to list of lots (adding ID and purchase name)
     listOfLots.append(object_of_lot.lot())
     listOfLots[i].lotID = lotIDs[i]
+    listOfLots[i].type = "конкурс"
     listOfLots[i].purchaseName = lotNames[i]
     listOfLots[i].customerAddress = lotAdresses[i]
     print("\n==========================")
@@ -58,7 +59,7 @@ con = psycopg2.connect(
         port="5432"
     )
 print("Database opened successfully")
-
+dbUser.getForEverything(con, listOfLots)
 
 #close DB
 con.close()
