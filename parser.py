@@ -18,19 +18,19 @@ func.press_loadButton(loadButton)
 # search lot's ID and purchase names
 lotIDs = []
 lotNames = []
-lotAdresses = []
+lotAddresses = []
 listForIDs = browser.find_elements_by_xpath("//div[@class ='lot-item__num-cat']/div/span")
 listForNames = browser.find_elements_by_xpath("//div[@class='lot-item__title']")
-listOfAdresses = browser.find_elements_by_xpath("//div[@class='lot-item__address']")
-for i, j, k in zip(listForIDs, listForNames, listOfAdresses):
+listOfAddresses = browser.find_elements_by_xpath("//div[@class='lot-item__address']")
+for i, j, k in zip(listForIDs, listForNames, listOfAddresses):
     lotIDs.append(i.text)
     lotNames.append(j.text)
-    lotAdresses.append(k.text)
+    lotAddresses.append(k.text)
 
 # clear lists
 listForIDs.clear()
 listForNames.clear()
-listOfAdresses.clear()
+listOfAddresses.clear()
 
 # create lot's object
 listOfLots = []
@@ -43,7 +43,7 @@ for i in range(len(lotNames)):
     listOfLots[i].lotID = lotIDs[i]
     listOfLots[i].type = "конкурс"
     listOfLots[i].purchaseName = lotNames[i]
-    listOfLots[i].customerAddress = lotAdresses[i]
+    listOfLots[i].customerAddress = lotAddresses[i]
     print("\n==========================")
     func.parseLot(browser, link, listOfLots[i])
 
