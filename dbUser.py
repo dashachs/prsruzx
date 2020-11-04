@@ -24,16 +24,39 @@
 #     con.close()
 #     return res[0][0]
 
-def getCategoryId(con, requierd):
+def getForEverything(con, listOfLots):  # название временное
+    for lot in listOfLots:
+        getForThisLot(con, lot)
+        printLotIDs(lot)
+
+
+def getForThisLot(con, currentLot):
+    currentLot.categoryID = getCategoryId(con, currentLot.category)
+    currentLot.customerAddressRegionID = getRegionId(con, currentLot.customerAddressRegion)
+    currentLot.customerAddressAreaID = getAreaId(con, currentLot.customerAddressArea)
+    currentLot.currencyID = getCurrencyId(con, currentLot.currency)
+
+
+def printLotIDs(currentLot):  # temp
+    print("Lot №\n  ", currentLot.lotID,
+          "\n  categoryID:  ", currentLot.categoryID,
+          "\n  customerAddressRegionID:  ", currentLot.customerAddressRegionID,
+          "\n  customerAddressAreaID:  ", currentLot.customerAddressAreaID,
+          "\n  currencyID:  ", currentLot.currencyID,
+          "======================================\n")
+
+
+def getCategoryId(con, required):
     cur = con.cursor()
     cur.execute("SELECT category_id, name FROM bidding_categories_translations")
     rows = cur.fetchall()
     for row in rows:
-        if row[1].lower().replace(' ', '') == requierd.lower().replace(' ', ''):
+        if row[1].lower().replace(' ', '') == required.lower().replace(' ', ''):
             print("getCategoryId done successfully")
             return row[0]
     print("getCategoryId didn't find name")
     return -1
+
 
 def getCurrencyId(con, requierd):
     cur = con.cursor()
@@ -46,6 +69,7 @@ def getCurrencyId(con, requierd):
     print("getCurrencyId didn't find name")
     return -1
 
+
 def getRegionId(con, requierd):
     cur = con.cursor()
     cur.execute("SELECT region_id, name FROM geo_regions_translations")
@@ -56,6 +80,7 @@ def getRegionId(con, requierd):
             return row[0]
     print("getRegionId didn't find name")
     return -1
+
 
 def getAreaId(con, requierd):
     cur = con.cursor()
