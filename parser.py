@@ -1,4 +1,5 @@
 from selenium import webdriver
+from psycopg2 import OperationalError
 import psycopg2
 import func
 import object_of_lot
@@ -10,10 +11,12 @@ options.add_argument('--headless')
 # start chrome browser
 browser = webdriver.Chrome('chromedriver.exe', options=options)
 browser.get('http://etender.uzex.uz/lots/1/0')
+print("connection to the site was successful")
 
 # press button for add new lots
 loadButton = func.find_loadButton(browser)
 func.press_loadButton(loadButton)
+print("page loaded to the end successfully")
 
 # search lot's ID and purchase names
 lotIDs = []
@@ -49,17 +52,26 @@ for i in range(len(lotNames)):
 
 # close browser
 browser.quit()
+print("Parsed and closed the browser successfully")
 
 # database input
-con = psycopg2.connect(
-        database="postgres",
-        user="anwar",
-        password="etender.uz",
-        host="database-rds.cbs8omqsohea.eu-west-3.rds.amazonaws.com",
-        port="5432"
-    )
-print("Database opened successfully")
+
+while True:
+    try:
+        con = psycopg2.connect(
+            database="postgres",
+            user="anwar",
+            password="etender.uz",
+            host="database-rds.cbs8omqsohea.eu-west-3.rds.amazonaws.com",
+            port="5432"
+        )
+    except OperationalError:
+        print("Failed to connect to the server. connection...")
+    else:
+        print("Database opened successfully")
+        break
+
 dbUser.getForEverything(con, listOfLots)
 
-#close DB
+# close DB
 con.close()

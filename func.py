@@ -95,7 +95,7 @@ def fillInLot(browser, link, currentLot):
 def printLotInfo(currentLot):  # temp
     print("lotID\n  ", currentLot.lotID,
           "\ntype\n  ", currentLot.type,
-          "\nlinkToLOt\n  ", currentLot.linkToLot,
+          "\nlinkToLot\n  ", currentLot.linkToLot,
           "\ncategory\n  ", currentLot.category,
           "\nstartedAt\n  ", currentLot.startedAt,
           "\nendedAt\n  ", currentLot.endedAt,
