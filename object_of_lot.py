@@ -4,7 +4,7 @@ class lot:
                  customerAddressCountryID=220, customerAddressRegion='-', customerAddressRegionID='-',
                  customerAddressArea='-', customerAddressAreaID='-', deliveryAddress='-', deliveryTerm='-', deposit='-',
                  depositPayment='-', advancePayment='-', paymentMethod='-', paymentPeriod='-', specialConditions='-',
-                 attachedFile='-', description='-', startingPrice='-', currency='-', currencyID='-'):
+                 attachedFile=None, description='-', startingPrice='-', currency='-', currencyID='-'):
         self.lotID = lotID  # -ID лота
         self.type = type  # -конкурс/тендер
         self.category = category  # - Категория +

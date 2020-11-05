@@ -10,6 +10,7 @@ def find_loadButton(browser):
     for i in buttons:
         if 'Загрузить ещё' in i.text:
             return i
+    return -1
 
 
 def press_loadButton(button):
@@ -39,8 +40,9 @@ def parseLot(browser, link, currentLot):
 
 
 def fillInLot(browser, link, currentLot):
+    currentLot.type = browser.find_element_by_xpath(
+        "//div[@class='mb-4']/div[3]/div[@class='col-md-7 ']/p/strong").text  # type - конкурс/тендер
     currentLot.category = browser.find_element_by_xpath(
-        # "//div[@class='mb-4']/div[3]/div[@class='col-md-7 ']/p/strong").text  # category - категория
         "//table[@class='table custom-table-dark--2']/tbody/tr/td[3]").text  # category - категория
     currentLot.startedAt = browser.find_element_by_xpath(
         "//div[@class='card lot__top-info']/p/strong[@class='text-success mt-3 ']").text  # startedAt - дата начала
@@ -72,6 +74,8 @@ def fillInLot(browser, link, currentLot):
         "//div[@class='mb-4']/div[12]/div[@class='col-md-7 ']/p/strong").text  # -Срок расчета (полной оплаты)
     currentLot.specialConditions = browser.find_element_by_xpath(
         "//*[@id='lot-details-tab-content-1']/div/div[@class='mb-4']/p").text  # specialConditions
+    if currentLot.specialConditions == "-":
+        currentLot.specialConditions = None  # if no special conditions
     currentLot.description = browser.find_element_by_xpath(
         "//div[@class='lot__products__item']/h5[@class='text-primary mb-3']").text.replace('1 - ', '')  # description
     tempForPrice = browser.find_element_by_xpath(
@@ -83,7 +87,7 @@ def fillInLot(browser, link, currentLot):
         currentLot.currency = tempForPrice[num] + currentLot.currency
     currentLot.currency = currentLot.currency.replace('-', '')  # -валюта
     currentLot.startingPrice = int(
-        (tempForPrice.replace(' ', '')).replace(currentLot.currency, ''))  # -Стартовая стоимость
+        (tempForPrice.replace(currentLot.currency, '')).replace(' ', ''))  # -Стартовая стоимость
     currentLot.linkToLot = link
 
     tempForAddress = currentLot.customerAddress.split(",")
