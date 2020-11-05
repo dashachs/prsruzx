@@ -21,6 +21,37 @@ def press_loadButton(button):
         pass
 
 
+def parseFromPage(browser, listOfLots):
+    # search lot's ID and purchase names
+    lotIDs = []
+    lotNames = []
+    lotAddresses = []
+    listForIDs = browser.find_elements_by_xpath("//div[@class ='lot-item__num-cat']/div/span")
+    listForNames = browser.find_elements_by_xpath("//div[@class='lot-item__title']")
+    listOfAddresses = browser.find_elements_by_xpath("//div[@class='lot-item__address']")
+    for i, j, k in zip(listForIDs, listForNames, listOfAddresses):
+        lotIDs.append(i.text)
+        lotNames.append(j.text)
+        lotAddresses.append(k.text)
+
+    # clear lists
+    listForIDs.clear()
+    listForNames.clear()
+    listOfAddresses.clear()
+
+    # parse lots
+    size = len(listOfLots)  # чтобы не было наслойки
+    for i in range(len(lotNames)):
+        link = "http://etender.uzex.uz/lot/" + lotIDs[i]
+        # adding new lot to list of lots (adding ID and purchase name)
+        listOfLots.append(object_of_lot.lot())
+        listOfLots[size + i].lotID = lotIDs[i]
+        listOfLots[size + i].purchaseName = lotNames[i]
+        listOfLots[size + i].customerAddress = lotAddresses[i]
+        print("\n==========================")
+        parseLot(browser, link, listOfLots[size + i])
+
+
 def parseLot(browser, link, currentLot):
     browser.get(link)
 
