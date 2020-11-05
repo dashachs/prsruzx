@@ -1,35 +1,13 @@
 def inputToDB(con, lot):
     cur = con.cursor()
-    cur.execute("INSERT INTO etender_uzex_test(lot_number)VALUES({})".format(lot.lotID))
-    cur.execute("INSERT INTO etender_uzex_test(type)VALUES('{}')".format(lot.type))
-    cur.execute("INSERT INTO etender_uzex_test(category_id)VALUES({})".format(lot.categoryID))
-    cur.execute("INSERT INTO etender_uzex_test(source_url)VALUES('{}')".format(lot.linkToLot))
-    # cur.execute("INSERT INTO etender_uzex_test(started_at)VALUES('{}')".format(lot.startedAt))
-    # cur.execute("INSERT INTO etender_uzex_test(ended_at)VALUES('{}')".format(lot.endedAt))
-
-    cur.execute("INSERT INTO etender_uzex_test(started_at, ended_at)VALUES(%s, %s)", (lot.startedAt, lot.endedAt))
-
-    cur.execute("INSERT INTO etender_uzex_test(status)VALUES('{}')".format(lot.status))
-    cur.execute("INSERT INTO etender_uzex_test(country_id)VALUES({})".format(lot.customerAddressCountryID))
-    cur.execute("INSERT INTO etender_uzex_test(region_id)VALUES({})".format(lot.customerAddressRegionID))
-    cur.execute("INSERT INTO etender_uzex_test(area_id)VALUES({})".format(lot.customerAddressAreaID))
-    cur.execute("INSERT INTO etender_uzex_test(price)VALUES({})".format(lot.startingPrice))
-    cur.execute("INSERT INTO etender_uzex_test(currency_id)VALUES({})".format(lot.currencyID))
-    cur.execute("INSERT INTO etender_uzex_test(purchase_name)VALUES('{}')".format(lot.purchaseName))
-    cur.execute("INSERT INTO etender_uzex_test(customer_name)VALUES('{}')".format(lot.customerName))
-    cur.execute("INSERT INTO etender_uzex_test(customer_details)VALUES('{}')".format(lot.customerDetails))
-    cur.execute("INSERT INTO etender_uzex_test(customer_contact)VALUES('{}')".format(lot.customerContact))
-    cur.execute("INSERT INTO etender_uzex_test(delivery_address)VALUES('{}')".format(lot.deliveryAddress))
-    cur.execute("INSERT INTO etender_uzex_test(delivery_term)VALUES('{}')".format(lot.deliveryTerm))
-    cur.execute("INSERT INTO etender_uzex_test(deposit)VALUES('{}')".format(lot.deposit))
-    cur.execute("INSERT INTO etender_uzex_test(deposit_payment)VALUES('{}')".format(lot.depositPayment))
-    cur.execute("INSERT INTO etender_uzex_test(advance_payment)VALUES('{}')".format(lot.advancePayment))
-    cur.execute("INSERT INTO etender_uzex_test(payment_method)VALUES('{}')".format(lot.paymentMethod))
-    cur.execute("INSERT INTO etender_uzex_test(payment_period)VALUES('{}')".format(lot.paymentPeriod))
-    cur.execute("INSERT INTO etender_uzex_test(special_conditions)VALUES('{}')".format(lot.specialConditions))
-    cur.execute("INSERT INTO etender_uzex_test(attached_file)VALUES('{}')".format(lot.attachedFile))
-    cur.execute("INSERT INTO etender_uzex_test(description)VALUES('{}')".format(lot.description))
-
+    cur.execute(
+        "INSERT INTO etender_uzex_test(lot_number, type, category_id, source_url, started_at, ended_at, status, country_id, region_id, area_id, price, currency_id, purchase_name, customer_name, customer_details, customer_contact, delivery_address, delivery_term, deposit, deposit_payment, advance_payment, payment_method, payment_period, special_conditions, attached_file, description)VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+        (lot.lotID, lot.type, lot.categoryID, lot.linkToLot, lot.startedAt, lot.endedAt, lot.status,
+         lot.customerAddressCountryID, lot.customerAddressRegionID, lot.customerAddressAreaID,
+         lot.startingPrice, lot.currencyID, lot.purchaseName, lot.customerName, lot.customerDetails,
+         lot.customerContact, lot.deliveryAddress, lot.deliveryTerm, lot.deposit, lot.depositPayment,
+         lot.advancePayment, lot.paymentMethod, lot.paymentPeriod, lot.specialConditions, lot.attachedFile,
+         lot.description))
     print("Date inserted successfully")
     con.commit()
 
