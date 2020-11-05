@@ -43,7 +43,7 @@ def printLotIDs(currentLot):  # temp
           "\n  customerAddressRegionID:  ", currentLot.customerAddressRegionID,
           "\n  customerAddressAreaID:  ", currentLot.customerAddressAreaID,
           "\n  currencyID:  ", currentLot.currencyID,
-          "======================================\n")
+          "\n======================================\n")
 
 
 def getCategoryId(con, required):
@@ -54,7 +54,7 @@ def getCategoryId(con, required):
         if row[1].lower().replace(' ', '') == required.lower().replace(' ', ''):
             print("getCategoryId done successfully")
             return row[0]
-    print("getCategoryId didn't find name")
+    print("getCategoryId didn't find name:", required)
     return -1
 
 
@@ -66,7 +66,7 @@ def getCurrencyId(con, requierd):
         if row[1].upper().replace(' ', '') == requierd.upper().replace(' ', ''):
             print("getCurrencyId done successfully", requierd, "ID =", row[0])
             return row[0]
-    print("getCurrencyId didn't find name")
+    print("getCurrencyId didn't find name:", requierd)
     return -1
 
 
@@ -78,7 +78,7 @@ def getRegionId(con, requierd):
         if row[1].lower().replace(' ', '') == requierd.lower().replace(' ', ''):
             print("getRegionId done successfully")
             return row[0]
-    print("getRegionId didn't find name")
+    print("getRegionId didn't find name:", requierd)
     return -1
 
 
@@ -86,9 +86,15 @@ def getAreaId(con, requierd):
     cur = con.cursor()
     cur.execute("SELECT area_id, name FROM geo_areas_translations")
     rows = cur.fetchall()
+    scrap = requierd
+    scrap = scrap.lower()
+    scrap = scrap.replace(' ', '')
+    scrap = scrap.replace('район', '')
+    scrap = scrap.replace('р-он', '')
+    scrap = scrap.replace('г.', '')
     for row in rows:
-        if row[1].lower().replace(' ', '') == requierd.lower().replace(' ', ''):
+        if scrap in row[1].lower().replace(' ', ''):
             print("getAreaId done successfully")
             return row[0]
-    print("getAreaId didn't find name")
+    print("getAreaId didn't find name:", requierd)
     return -1
