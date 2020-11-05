@@ -75,6 +75,7 @@ while True:
         break
 
 dbUser.getForEverything(con, listOfLots)
+# dbUser.addEverything(con, listOfLots)
 
 #testing
 dbUser.inputToDB(con, listOfLots[0])

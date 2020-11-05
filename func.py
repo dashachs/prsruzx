@@ -44,8 +44,10 @@ def fillInLot(browser, link, currentLot):
         "//table[@class='table custom-table-dark--2']/tbody/tr/td[3]").text  # category - категория
     currentLot.startedAt = browser.find_element_by_xpath(
         "//div[@class='card lot__top-info']/p/strong[@class='text-success mt-3 ']").text  # startedAt - дата начала
+    currentLot.startedAt = reformatDate(currentLot.startedAt)  # замена dd-mm-yyyy hh:mm на yyyy-mm-dd hh:mm
     currentLot.endedAt = browser.find_element_by_xpath(
         "//div[@class='card  lot__top-info']/p/strong[@class='text-danger mt-3 ']").text  # endedAt - дата окончания
+    currentLot.endedAt = reformatDate(currentLot.endedAt)  # замена dd-mm-yyyy hh:mm на yyyy-mm-dd hh:mm
     currentLot.customerName = browser.find_element_by_xpath(
         "//div[@class='mb-4']/div[2]/div[@class='col-md-7 ']/p/strong").text  # customerName - Наименование заказчика
     currentLot.customerDetails = "ИНН: " + browser.find_element_by_xpath(
@@ -90,6 +92,13 @@ def fillInLot(browser, link, currentLot):
 
     # printing lot information (temp)
     printLotInfo(currentLot)
+
+
+def reformatDate(date):
+    dateAndTime = date.split(' ')
+    dayMonthYear = dateAndTime[0].split('-')
+    date = (((((dayMonthYear[2] + '-') + dayMonthYear[1]) + '-') + dayMonthYear[0]) + ' ') + dateAndTime[1]
+    return date
 
 
 def printLotInfo(currentLot):  # temp
