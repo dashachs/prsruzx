@@ -75,7 +75,7 @@ def getRegionId(con, requierd):
     cur.execute("SELECT region_id, name FROM geo_regions_translations")
     rows = cur.fetchall()
     for row in rows:
-        if row[1].lower().replace(' ', '') == requierd.lower().replace(' ', ''):
+        if row[1].lower().replace(' ', '') == requierd.replace('город', '').lower().replace(' ', ''):
             print("getRegionId done successfully")
             return row[0]
     print("getRegionId didn't find name:", requierd)
