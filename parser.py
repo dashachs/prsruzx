@@ -5,11 +5,14 @@ import func
 import object_of_lot
 import dbUser
 
+print("parser started successful")
+
 options = webdriver.ChromeOptions()
 options.add_argument('--headless')
 
 # start chrome browser
 browser = webdriver.Chrome('chromedriver.exe', options=options)
+print("browser opened successful")
 browser.get('http://etender.uzex.uz/lots/1/0')
 print("connection to the site was successful")
 
@@ -72,6 +75,9 @@ while True:
         break
 
 dbUser.getForEverything(con, listOfLots)
+
+#testing
+dbUser.inputToDB(con, listOfLots[0])
 
 # close DB
 con.close()
