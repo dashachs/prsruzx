@@ -66,8 +66,11 @@ while True:
 dbUser.getForEverything(con, listOfLots)
 # dbUser.addEverything(con, listOfLots)
 
-# testing
-dbUser.inputToDB(con, listOfLots[0])
+
+#adding to DB
+for lot in listOfLots:
+    if not dbUser.inTable(con, lot.lotID):
+        dbUser.inputToDB(con, lot)
 
 # close DB
 con.close()
