@@ -11,9 +11,11 @@ def inputToDB(con, lot):
     print("{} inserted successfully".format(lot.lotID))
     con.commit()
 
+def deleteExpiredLots(con):
+    cur = con.cursor()
+    cur.execute("DELETE FROM etender_uzex_test WHERE ended_at < now()")
+    con.commit()
 
-#
-#
 # def deleteRow(id, con):
 #     cur = con.cursor()
 #     cur.execute("DELETE FROM etender_uzex_test WHERE lot_number={}".format(id))
