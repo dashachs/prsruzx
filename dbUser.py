@@ -104,3 +104,12 @@ def getAreaId(con, requierd):
             return row[0]
     print("getAreaId didn't find name:", requierd)
     return -1
+
+def inTable(con, lotNumber):
+    cur = con.cursor()
+    cur.execute("SELECT lot_number FROM etender_uzex_test")
+    rows = cur.fetchall()
+    for row in rows:
+        if int(lotNumber) == int(row):
+            return True
+    return False
