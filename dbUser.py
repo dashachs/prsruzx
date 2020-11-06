@@ -8,7 +8,7 @@ def inputToDB(con, lot):
          lot.customerContact, lot.deliveryAddress, lot.deliveryTerm, lot.deposit, lot.depositPayment,
          lot.advancePayment, lot.paymentMethod, lot.paymentPeriod, lot.specialConditions, lot.attachedFile,
          lot.description))
-    print("Date inserted successfully")
+    print("{} inserted successfully".format(lot.lotID))
     con.commit()
 
 
@@ -110,6 +110,6 @@ def inTable(con, lotNumber):
     cur.execute("SELECT lot_number FROM etender_uzex_test")
     rows = cur.fetchall()
     for row in rows:
-        if lotNumber == row[0]:
+        if int(lotNumber) == row[0]:
             return True
     return False

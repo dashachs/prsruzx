@@ -71,6 +71,8 @@ dbUser.getForEverything(con, listOfLots)
 for lot in listOfLots:
     if not dbUser.inTable(con, lot.lotID):
         dbUser.inputToDB(con, lot)
+    else:
+        print(lot.lotID, "already in DB")
 
 # close DB
 con.close()
