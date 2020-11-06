@@ -110,6 +110,6 @@ def inTable(con, lotNumber):
     cur.execute("SELECT lot_number FROM etender_uzex_test")
     rows = cur.fetchall()
     for row in rows:
-        if int(lotNumber) == int(row):
+        if lotNumber == row[0]:
             return True
     return False
