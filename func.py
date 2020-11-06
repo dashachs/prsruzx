@@ -5,6 +5,23 @@ from selenium.webdriver.support import expected_conditions
 from selenium.common.exceptions import TimeoutException
 import object_of_lot
 
+def checkIfPageIsLoaded(browser, link):
+    browser.get(link)
+    # waiting for page to load
+    loadingStatus = 1
+    try:
+        textXPATH = "/main"
+        # setting waiting time
+        wait = WebDriverWait(browser, 10)
+        element = wait.until(
+            expected_conditions.text_to_be_present_in_element((By.XPATH, textXPATH), "№ лота:")
+        )
+    except TimeoutException:  # https://qna.habr.com/q/641216 - храни их господь
+        print("TimeoutException or an empty page")
+        loadingStatus = 0
+    finally:
+        return loadingStatus
+
 
 def find_loadButton(browser):
     buttons = browser.find_elements_by_css_selector('button.btn-outline-primary')
@@ -49,7 +66,8 @@ def parseFromPage(browser, listOfLots):
         listOfLots[size + i].lotID = lotIDs[i]
         listOfLots[size + i].purchaseName = lotNames[i]
         listOfLots[size + i].customerAddress = lotAddresses[i]
-        print("\n==========================")
+        print("==========================")
+        print("#", size + i + 1)  # to count lots
         parseLot(browser, link, listOfLots[size + i])
 
 
@@ -65,7 +83,7 @@ def parseLot(browser, link, currentLot):
             expected_conditions.text_to_be_present_in_element((By.XPATH, textXPATH), "Дата начала:")
         )
     except TimeoutException:  # https://qna.habr.com/q/641216 - храни их господь
-        print("TimeoutException ig (idk)")
+        print("TimeoutException in parsing ig (idk)")
         return 0
     finally:
         fillInLot(browser, link, currentLot)
@@ -127,6 +145,7 @@ def fillInLot(browser, link, currentLot):
     currentLot.customerAddressArea = tempForAddress[1]
 
     # printing lot information (temp)
+
     printLotInfo(currentLot)
 
 
@@ -138,28 +157,30 @@ def reformatDate(date):
 
 
 def printLotInfo(currentLot):  # temp
-    print("lotID\n  ", currentLot.lotID,
-          "\ntype\n  ", currentLot.type,
-          "\nlinkToLot\n  ", currentLot.linkToLot,
-          "\ncategory\n  ", currentLot.category,
-          "\nstartedAt\n  ", currentLot.startedAt,
-          "\nendedAt\n  ", currentLot.endedAt,
-          "\nstatus\n  ", currentLot.status,
-          "\npurchaseName\n  ", currentLot.purchaseName,
-          "\ncustomerName\n  ", currentLot.customerName,
-          "\ncustomerDetails\n  ", currentLot.customerDetails,
-          "\ncustomerContact\n  ", currentLot.customerContact,
-          "\ncustomerAddressRegion\n  ", currentLot.customerAddressRegion,
-          "\ncustomerAddressArea\n  ", currentLot.customerAddressArea,
-          "\ndeliveryAddress\n  ", currentLot.deliveryAddress,
-          "\ndeliveryTerm\n  ", currentLot.deliveryTerm,
-          "\ndeposit\n  ", currentLot.deposit,
-          "\ndepositPayment\n  ", currentLot.depositPayment,
-          "\nadvancePayment\n  ", currentLot.advancePayment,
-          "\npaymentMethod\n  ", currentLot.paymentMethod,
-          "\npaymentPeriod\n  ", currentLot.paymentPeriod,
-          "\nspecialConditions\n  ", currentLot.specialConditions,
-          "\nattachedFile\n  ", currentLot.attachedFile,
-          "\ndescription\n  ", currentLot.description,
-          "\nstartingPrice\n  ", currentLot.startingPrice,
-          "\ncurrency\n  ", currentLot.currency)
+    print("lotID:  ", currentLot.lotID)
+# output is temporarily commented
+    # print("lotID\n  ", currentLot.lotID,
+          # "\ntype\n  ", currentLot.type,
+          # "\nlinkToLot\n  ", currentLot.linkToLot,
+          # "\ncategory\n  ", currentLot.category,
+          # "\nstartedAt\n  ", currentLot.startedAt,
+          # "\nendedAt\n  ", currentLot.endedAt,
+          # "\nstatus\n  ", currentLot.status,
+          # "\npurchaseName\n  ", currentLot.purchaseName,
+          # "\ncustomerName\n  ", currentLot.customerName,
+          # "\ncustomerDetails\n  ", currentLot.customerDetails,
+          # "\ncustomerContact\n  ", currentLot.customerContact,
+          # "\ncustomerAddressRegion\n  ", currentLot.customerAddressRegion,
+          # "\ncustomerAddressArea\n  ", currentLot.customerAddressArea,
+          # "\ndeliveryAddress\n  ", currentLot.deliveryAddress,
+          # "\ndeliveryTerm\n  ", currentLot.deliveryTerm,
+          # "\ndeposit\n  ", currentLot.deposit,
+          # "\ndepositPayment\n  ", currentLot.depositPayment,
+          # "\nadvancePayment\n  ", currentLot.advancePayment,
+          # "\npaymentMethod\n  ", currentLot.paymentMethod,
+          # "\npaymentPeriod\n  ", currentLot.paymentPeriod,
+          # "\nspecialConditions\n  ", currentLot.specialConditions,
+          # "\nattachedFile\n  ", currentLot.attachedFile,
+          # "\ndescription\n  ", currentLot.description,
+          # "\nstartingPrice\n  ", currentLot.startingPrice,
+          # "\ncurrency\n  ", currentLot.currency)
