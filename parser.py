@@ -19,13 +19,7 @@ print("browser opened successfully")
 
 # open tenders page
 link = 'http://etender.uzex.uz/lots/2/0'
-browser.get(link)
-print("connection to the site was successful")
-
-# press button for add new lots
-loadButton = func.find_loadButton(browser)
-if loadButton != -1:
-    func.press_loadButton(loadButton)
+func.openAndLoadPage(browser, link)
 print("  tenders page loaded to the end successfully")
 
 # parse tenders
@@ -40,13 +34,7 @@ print("browser reopened successfully\n")
 
 # open contests page
 link = 'http://etender.uzex.uz/lots/1/0'
-browser.get(link)
-print("connection to the site was successful")
-
-# press button for add new lots
-loadButton = func.find_loadButton(browser)
-if loadButton != -1:
-    func.press_loadButton(loadButton)
+func.openAndLoadPage(browser, link)
 print("  contests page loaded to the end successfully")
 
 # parse contests

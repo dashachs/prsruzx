@@ -5,22 +5,15 @@ from selenium.webdriver.support import expected_conditions
 from selenium.common.exceptions import TimeoutException
 import object_of_lot
 
-def checkIfPageIsLoaded(browser, link):
+
+def openAndLoadPage(browser, link):
     browser.get(link)
-    # waiting for page to load
-    loadingStatus = 1
-    try:
-        textXPATH = "/main"
-        # setting waiting time
-        wait = WebDriverWait(browser, 10)
-        element = wait.until(
-            expected_conditions.text_to_be_present_in_element((By.XPATH, textXPATH), "№ лота:")
-        )
-    except TimeoutException:  # https://qna.habr.com/q/641216 - храни их господь
-        print("TimeoutException or an empty page")
-        loadingStatus = 0
-    finally:
-        return loadingStatus
+    print("connection to the site was successful")
+
+    # press button for add new lots
+    loadButton = find_loadButton(browser)
+    if loadButton != -1:
+        press_loadButton(loadButton)
 
 
 def find_loadButton(browser):
@@ -184,3 +177,21 @@ def printLotInfo(currentLot):  # temp
           # "\ndescription\n  ", currentLot.description,
           # "\nstartingPrice\n  ", currentLot.startingPrice,
           # "\ncurrency\n  ", currentLot.currency)
+
+
+def checkIfPageIsLoaded(browser, link):
+    browser.get(link)
+    # waiting for page to load
+    loadingStatus = 1
+    try:
+        textXPATH = "/main"
+        # setting waiting time
+        wait = WebDriverWait(browser, 10)
+        element = wait.until(
+            expected_conditions.text_to_be_present_in_element((By.XPATH, textXPATH), "№ лота:")
+        )
+    except TimeoutException:  # https://qna.habr.com/q/641216 - храни их господь
+        print("TimeoutException or an empty page")
+        loadingStatus = 0
+    finally:
+        return loadingStatus
