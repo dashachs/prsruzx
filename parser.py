@@ -74,5 +74,8 @@ for lot in listOfLots:
     else:
         print(lot.lotID, "already in DB")
 
+#delete expired lots
+dbUser.deleteExpiredLots(con)
+
 # close DB
 con.close()
