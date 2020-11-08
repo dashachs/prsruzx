@@ -12,12 +12,17 @@ def inputToDB(con, lot):
     con.commit()
 
 
-def deleteExpiredLots(con):
+# def deleteExpiredLots(con):
+#     cur = con.cursor()
+#     cur.execute("SET TIMEZONE=5")
+#     cur.execute("DELETE FROM etender_uzex_test WHERE ended_at < now()")
+#     con.commit()
+#     print("Expired lots were deleted")
+
+def findExpiredLots(con):
     cur = con.cursor()
     cur.execute("SET TIMEZONE=5")
-    cur.execute("DELETE FROM etender_uzex_test WHERE ended_at < now()")
-    con.commit()
-    print("Expired lots were deleted")
+    cur.execute("UPDATE etender_uzex_test SET status = %s WHERE ended_at < now()",('expired'))
 
 
 # def deleteRow(id, con):

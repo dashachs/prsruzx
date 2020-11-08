@@ -74,8 +74,8 @@ def executeParser():
         else:
             print(lot.lotID, "already in DB")
 
-    # delete expired lots
-    dbUser.deleteExpiredLots(con)
+    # find expired lots
+    dbUser.findExpiredLots(con)
 
     # close DB
     con.close()
