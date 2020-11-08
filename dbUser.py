@@ -11,10 +11,14 @@ def inputToDB(con, lot):
     print("{} inserted successfully".format(lot.lotID))
     con.commit()
 
+
 def deleteExpiredLots(con):
     cur = con.cursor()
+    cur.execute("SET TIMEZONE=5")
     cur.execute("DELETE FROM etender_uzex_test WHERE ended_at < now()")
     con.commit()
+    print("Expired lots were deleted")
+
 
 # def deleteRow(id, con):
 #     cur = con.cursor()
@@ -46,7 +50,7 @@ def getForThisLot(con, currentLot):
 
 
 def printLotIDs(currentLot):  # temp
-    print("Lot №\n  ", currentLot.lotID,
+    print("Lot №  ", currentLot.lotID,
           "\n  categoryID:  ", currentLot.categoryID,
           "\n  customerAddressRegionID:  ", currentLot.customerAddressRegionID,
           "\n  customerAddressAreaID:  ", currentLot.customerAddressAreaID,
@@ -106,6 +110,7 @@ def getAreaId(con, requierd):
             return row[0]
     print("getAreaId didn't find name:", requierd)
     return -1
+
 
 def inTable(con, lotNumber):
     cur = con.cursor()
