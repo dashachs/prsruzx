@@ -94,11 +94,11 @@ def getRegionId(con, requierd):
     return -1
 
 
-def getAreaId(con, requierd):
+def getAreaId(con, required):
     cur = con.cursor()
     cur.execute("SELECT id, area_id, name FROM geo_areas_translations")
     rows = cur.fetchall()
-    scrap = requierd
+    scrap = required
     scrap = scrap.lower()
     scrap = scrap.replace(' ', '')
     scrap = scrap.replace('район', '')
@@ -108,18 +108,19 @@ def getAreaId(con, requierd):
         if scrap in row[2].lower().replace(' ', ''):
             print("getAreaId done successfully")
             return row[1]
-    print("getAreaId didn't find name:", requierd)
-    cur.execute("INSERT INTO geo_areas_translations(id, area_id, name, locale) VALUES (%s, %s, %s, %s)",
-                (rows[-1][0] + 1,
-                 rows[-1][1] + 1,
-                 requierd,
-                 'rus'))
-    cur.execute("INSERT INTO geo_areas_translations(id, area_id, name, locale) VALUES (%s, %s, %s, %s)",
-                (rows[-1][0] + 2,
-                 rows[-1][1] + 1,
-                 requierd,
-                 'uzb'))
-
+    print("getAreaId didn't find name:", required)
+    return -1
+    # cur.execute("INSERT INTO geo_areas_translations(id, area_id, name, locale) VALUES (%s, %s, %s, %s)",
+    #             (rows[-1][0] + 1,
+    #              rows[-1][1] + 1,
+    #              required,
+    #              'rus'))
+    # cur.execute("INSERT INTO geo_areas_translations(id, area_id, name, locale) VALUES (%s, %s, %s, %s)",
+    #             (rows[-1][0] + 2,
+    #              rows[-1][1] + 1,
+    #              required,
+    #              'uzb'))
+    # con.commit()
 
 def inTable(con, lotNumber):
     cur = con.cursor()
