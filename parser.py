@@ -81,6 +81,9 @@ def executeParser():
     con.close()
     print("Database closed successfully")
 
+    # clear list of lots
+    listOfLots.clear()
+
     # setting repeating time
     timerTime = 60
     print("\n~~~~~~~~~~~~~~~~~~~~~\n"
