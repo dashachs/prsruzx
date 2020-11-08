@@ -63,6 +63,11 @@ def parseFromPage(browser, listOfLots):
         print("#", size + 1)  # to count lots
         parseLot(browser, link, listOfLots[size])
 
+    # clear lists
+    lotIDs.clear()
+    lotNames.clear()
+    lotAddresses.clear()
+
 
 def parseLot(browser, link, currentLot):
     browser.get(link)
@@ -136,9 +141,9 @@ def fillInLot(browser, link, currentLot):
     tempForAddress = currentLot.customerAddress.split(",")
     currentLot.customerAddressRegion = tempForAddress[0]
     currentLot.customerAddressArea = tempForAddress[1]
+    tempForAddress.clear()
 
     # printing lot information (temp)
-
     printLotInfo(currentLot)
 
 
@@ -146,37 +151,39 @@ def reformatDate(date):
     dateAndTime = date.split(' ')
     dayMonthYear = dateAndTime[0].split('-')
     date = (((((dayMonthYear[2] + '-') + dayMonthYear[1]) + '-') + dayMonthYear[0]) + ' ') + dateAndTime[1]
+    dateAndTime.clear()
+    dayMonthYear.clear()
     return date
 
 
 def printLotInfo(currentLot):  # temp
     print("lotID:  ", currentLot.lotID)
-# output is temporarily commented
-# print("lotID\n  ", currentLot.lotID,
-# "\ntype\n  ", currentLot.type,
-# "\nlinkToLot\n  ", currentLot.linkToLot,
-# "\ncategory\n  ", currentLot.category,
-# "\nstartedAt\n  ", currentLot.startedAt,
-# "\nendedAt\n  ", currentLot.endedAt,
-# "\nstatus\n  ", currentLot.status,
-# "\npurchaseName\n  ", currentLot.purchaseName,
-# "\ncustomerName\n  ", currentLot.customerName,
-# "\ncustomerDetails\n  ", currentLot.customerDetails,
-# "\ncustomerContact\n  ", currentLot.customerContact,
-# "\ncustomerAddressRegion\n  ", currentLot.customerAddressRegion,
-# "\ncustomerAddressArea\n  ", currentLot.customerAddressArea,
-# "\ndeliveryAddress\n  ", currentLot.deliveryAddress,
-# "\ndeliveryTerm\n  ", currentLot.deliveryTerm,
-# "\ndeposit\n  ", currentLot.deposit,
-# "\ndepositPayment\n  ", currentLot.depositPayment,
-# "\nadvancePayment\n  ", currentLot.advancePayment,
-# "\npaymentMethod\n  ", currentLot.paymentMethod,
-# "\npaymentPeriod\n  ", currentLot.paymentPeriod,
-# "\nspecialConditions\n  ", currentLot.specialConditions,
-# "\nattachedFile\n  ", currentLot.attachedFile,
-# "\ndescription\n  ", currentLot.description,
-# "\nstartingPrice\n  ", currentLot.startingPrice,
-# "\ncurrency\n  ", currentLot.currency)
+    # output is temporarily commented
+    # print("lotID\n  ", currentLot.lotID,
+    # "\ntype\n  ", currentLot.type,
+    # "\nlinkToLot\n  ", currentLot.linkToLot,
+    # "\ncategory\n  ", currentLot.category,
+    # "\nstartedAt\n  ", currentLot.startedAt,
+    # "\nendedAt\n  ", currentLot.endedAt,
+    # "\nstatus\n  ", currentLot.status,
+    # "\npurchaseName\n  ", currentLot.purchaseName,
+    # "\ncustomerName\n  ", currentLot.customerName,
+    # "\ncustomerDetails\n  ", currentLot.customerDetails,
+    # "\ncustomerContact\n  ", currentLot.customerContact,
+    # "\ncustomerAddressRegion\n  ", currentLot.customerAddressRegion,
+    # "\ncustomerAddressArea\n  ", currentLot.customerAddressArea,
+    # "\ndeliveryAddress\n  ", currentLot.deliveryAddress,
+    # "\ndeliveryTerm\n  ", currentLot.deliveryTerm,
+    # "\ndeposit\n  ", currentLot.deposit,
+    # "\ndepositPayment\n  ", currentLot.depositPayment,
+    # "\nadvancePayment\n  ", currentLot.advancePayment,
+    # "\npaymentMethod\n  ", currentLot.paymentMethod,
+    # "\npaymentPeriod\n  ", currentLot.paymentPeriod,
+    # "\nspecialConditions\n  ", currentLot.specialConditions,
+    # "\nattachedFile\n  ", currentLot.attachedFile,
+    # "\ndescription\n  ", currentLot.description,
+    # "\nstartingPrice\n  ", currentLot.startingPrice,
+    # "\ncurrency\n  ", currentLot.currency)
 
 
 # def checkIfPageIsLoaded(browser, link):
