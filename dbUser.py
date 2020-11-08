@@ -96,7 +96,7 @@ def getRegionId(con, requierd):
 
 def getAreaId(con, requierd):
     cur = con.cursor()
-    cur.execute("SELECT area_id, name FROM geo_areas_translations")
+    cur.execute("SELECT id, area_id, name FROM geo_areas_translations")
     rows = cur.fetchall()
     scrap = requierd
     scrap = scrap.lower()
@@ -105,11 +105,20 @@ def getAreaId(con, requierd):
     scrap = scrap.replace('р-он', '')
     scrap = scrap.replace('г.', '')
     for row in rows:
-        if scrap in row[1].lower().replace(' ', ''):
+        if scrap in row[2].lower().replace(' ', ''):
             print("getAreaId done successfully")
-            return row[0]
+            return row[1]
     print("getAreaId didn't find name:", requierd)
-    return -1
+    cur.execute("INSERT INTO geo_areas_translations(id, area_id, name, locale) VALUES (%s, %s, %s, %s)",
+                (rows[-1][0] + 1,
+                 rows[-1][1] + 1,
+                 requierd,
+                 'rus'))
+    cur.execute("INSERT INTO geo_areas_translations(id, area_id, name, locale) VALUES (%s, %s, %s, %s)",
+                (rows[-1][0] + 2,
+                 rows[-1][1] + 1,
+                 requierd,
+                 'uzb'))
 
 
 def inTable(con, lotNumber):
