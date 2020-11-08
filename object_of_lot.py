@@ -1,10 +1,11 @@
 class lot:
-    def __init__(self, lotID='-', type='-', category='-', categoryID='-', linkToLot='-', startDate='-', endDate='-', status='relevant',
-                 purchaseName='-', customerName='-', customerDetails='-', customerContact='-', customerAddress='-',
-                 customerAddressCountryID=220, customerAddressRegion='-', customerAddressRegionID='-',
-                 customerAddressArea='-', customerAddressAreaID='-', deliveryAddress='-', deliveryTerm='-', deposit='-',
-                 depositPayment='-', advancePayment='-', paymentMethod='-', paymentPeriod='-', specialConditions='-',
-                 attachedFile=None, description='-', startingPrice='-', currency='-', currencyID='-'):
+    def __init__(self, lotID=None, type=None, category=None, categoryID=None, linkToLot=None, startDate=None,
+                 endDate=None, status='relevant', purchaseName=None, customerName=None, customerDetails=None,
+                 customerContact=None, customerAddress=None, customerAddressCountryID=220, customerAddressRegion=None,
+                 customerAddressRegionID=None, customerAddressArea=None, customerAddressAreaID=None, deliveryAddress=None,
+                 deliveryTerm=None, deposit=None, depositPayment=None, advancePayment=None, paymentMethod=None,
+                 paymentPeriod=None, specialConditions=None, attachedFile=None, description=None, startingPrice=None,
+                 currency=None, currencyID=None):
         self.lotID = lotID  # -ID лота
         self.type = type  # -конкурс/тендер
         self.category = category  # - Категория +
