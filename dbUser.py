@@ -22,7 +22,7 @@ def inputToDB(con, lot):
 def findExpiredLots(con):
     cur = con.cursor()
     cur.execute("SET TIMEZONE=5")
-    cur.execute("UPDATE etender_uzex_test SET status = %s WHERE ended_at < now()",('expired'))
+    cur.execute("UPDATE etender_uzex_test SET status = %s WHERE ended_at < now()", ('expired'))
 
 
 # def deleteRow(id, con):
@@ -126,6 +126,7 @@ def getAreaId(con, required):
     #              required,
     #              'uzb'))
     # con.commit()
+
 
 def inTable(con, lotNumber):
     cur = con.cursor()

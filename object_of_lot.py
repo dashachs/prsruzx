@@ -1,5 +1,6 @@
 class lot:
-    def __init__(self, lotID='-', type='-', category='-', categoryID='-', linkToLot='-', startDate='-', endDate='-', status='relevant',
+    def __init__(self, lotID='-', type='-', category='-', categoryID='-', linkToLot='-', startDate='-', endDate='-',
+                 status='relevant',
                  purchaseName='-', customerName='-', customerDetails='-', customerContact='-', customerAddress='-',
                  customerAddressCountryID=220, customerAddressRegion='-', customerAddressRegionID='-',
                  customerAddressArea='-', customerAddressAreaID='-', deliveryAddress='-', deliveryTerm='-', deposit='-',
@@ -21,7 +22,7 @@ class lot:
         self.customerAddressCountryID = customerAddressCountryID  # -ID адрес заказчика (country ID)
         self.customerAddressRegion = customerAddressRegion  # -Адрес заказчика (region)
         self.customerAddressRegionID = customerAddressRegionID  # -ID адрес заказчика (region ID)
-        self.customerAddressArea = customerAddressArea   # -Адрес заказчика (area)
+        self.customerAddressArea = customerAddressArea  # -Адрес заказчика (area)
         self.customerAddressAreaID = customerAddressAreaID  # -ID адрес заказчика (area ID)
         self.deliveryAddress = deliveryAddress  # -Адрес поставки +
         self.deliveryTerm = deliveryTerm  # -Условия поставки
