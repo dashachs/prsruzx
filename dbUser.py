@@ -21,6 +21,7 @@ def inputToDB(con, lot):
 
 def findExpiredLots(con):
     cur = con.cursor()
+    # setting timezone for current session to avoid mistakes
     cur.execute("SET TIMEZONE=5")
     cur.execute("UPDATE etender_uzex_test SET status = %s WHERE ended_at < now()", ('expired'))
 
@@ -40,6 +41,7 @@ def findExpiredLots(con):
 #     con.commit()
 #     con.close()
 #     return res[0][0]
+
 
 def getForEverything(con, listOfLots):  # название временное
     for lot in listOfLots:
@@ -72,6 +74,7 @@ def getCategoryId(con, required):
             print("getCategoryId done successfully")
             return row[0]
     print("getCategoryId didn't find name:", required)
+    rows.clear()
     return -1
 
 
@@ -84,6 +87,7 @@ def getCurrencyId(con, requierd):
             print("getCurrencyId done successfully", requierd, "ID =", row[0])
             return row[0]
     print("getCurrencyId didn't find name:", requierd)
+    rows.clear()
     return -1
 
 
@@ -96,6 +100,7 @@ def getRegionId(con, requierd):
             print("getRegionId done successfully")
             return row[0]
     print("getRegionId didn't find name:", requierd)
+    rows.clear()
     return -1
 
 
@@ -114,6 +119,7 @@ def getAreaId(con, required):
             print("getAreaId done successfully")
             return row[1]
     print("getAreaId didn't find name:", required)
+    rows.clear()
     return -1
     # cur.execute("INSERT INTO geo_areas_translations(id, area_id, name, locale) VALUES (%s, %s, %s, %s)",
     #             (rows[-1][0] + 1,
