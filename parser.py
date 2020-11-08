@@ -3,7 +3,6 @@ from psycopg2 import OperationalError
 import psycopg2
 import time
 import func
-import object_of_lot
 import dbUser
 
 
@@ -80,6 +79,7 @@ def executeParser():
 
     # close DB
     con.close()
+    print("Database closed successfully")
 
     # setting repeating time
     timerTime = 60
