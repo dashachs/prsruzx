@@ -1,5 +1,3 @@
-import os
-
 from selenium import webdriver
 from psycopg2 import OperationalError
 import psycopg2
@@ -17,6 +15,7 @@ def executeParser():
 
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')
+    options.add_experimental_option('excludeSwitches', ['enable-logging'])
 
     # create lot's object
     listOfLots = []
