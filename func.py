@@ -19,7 +19,7 @@ def openAndLoadPage(browser, link):
         print("TimeoutException in openAndLoadPage")
         raise TimeoutException
     finally:
-        print("connection to the site was successful")
+        # print("connection to the site was successful")
 
         # press button for add new lots
         loadButton = find_loadButton(browser)
@@ -70,8 +70,8 @@ def parseFromPage(browser, listOfLots):
         listOfLots[size].lotID = lotIDs[i]
         listOfLots[size].purchaseName = lotNames[i]
         listOfLots[size].customerAddress = lotAddresses[i]
-        print("==========================")
-        print("#", size + 1)  # to count lots
+        # print("==========================")
+        # print("#", size + 1)  # to count lots
         parseLot(browser, link, listOfLots[size])
 
     # clear lists
@@ -156,7 +156,7 @@ def fillInLot(browser, link, currentLot):
     tempForAddress.clear()
 
     # printing lot information (temp)
-    printLotInfo(currentLot)
+    # printLotInfo(currentLot)
 
 
 def reformatDate(date):

@@ -1,3 +1,5 @@
+import os
+
 from selenium import webdriver
 from psycopg2 import OperationalError
 import psycopg2
@@ -10,7 +12,8 @@ import dbUser
 
 
 def executeParser():
-    print("parser started successfully")
+    # print("parser started successfully")
+    print("Parsing...")
 
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')
@@ -20,27 +23,26 @@ def executeParser():
 
     # start chrome browser
     browser = webdriver.Chrome('chromedriver.exe', options=options)
-    print("browser opened successfully")
+    # print("browser opened successfully")
 
     # open tenders page
     link = 'http://etender.uzex.uz/lots/2/0'
     func.openAndLoadPage(browser, link)
-    print("  tenders page loaded to the end successfully")
+    # print("  tenders page loaded to the end successfully")
 
     # parse tenders
     func.parseFromPage(browser, listOfLots)
 
     # reopening browser bc this bitch won't load
     browser.quit()
-    print("==========================\n"
-          "\nbrowser closed successfully")
+    # print("browser closed successfully")
     browser = webdriver.Chrome('chromedriver.exe', options=options)
-    print("browser reopened successfully\n")
+    # print("browser reopened successfully\n")
 
     # open contests page
     link = 'http://etender.uzex.uz/lots/1/0'
     func.openAndLoadPage(browser, link)
-    print("  contests page loaded to the end successfully")
+    # print("  contests page loaded to the end successfully")
 
     # parse contests
     func.parseFromPage(browser, listOfLots)
@@ -48,7 +50,7 @@ def executeParser():
     print("Parsed successfully")
     # close browser
     browser.quit()
-    print("browser closed successfully")
+    # print("browser closed successfully\n")
 
     # database input
 
@@ -64,7 +66,7 @@ def executeParser():
         except OperationalError:
             print("Failed to connect to the server. connection...")
         else:
-            print("Database opened successfully")
+            print("Database was opened successfully")
             break
 
     dbUser.getForEverything(con, listOfLots)
@@ -74,15 +76,17 @@ def executeParser():
     for lot in listOfLots:
         if not dbUser.inTable(con, lot.lotID):
             dbUser.inputToDB(con, lot)
-        else:
-            print(lot.lotID, "already in DB")
+        # else:
+        #     print(lot.lotID, "already in DB")
 
     # find expired lots
     dbUser.findExpiredLots(con)
 
+    print("Database is up-to-date")
+
     # close DB
     con.close()
-    print("Database closed successfully")
+    # print("Database closed successfully")
 
     # clear list of lots
     listOfLots.clear()
@@ -99,7 +103,7 @@ while True:
         print("ERROR")
     finally:
         # setting repeating time
-        timerTime = 60
+        timerTime = 90
         print("\n~~~~~~~~~~~~~~~~~~~~~\n"
               "Parser will start again in", timerTime, "seconds"
               "\n~~~~~~~~~~~~~~~~~~~~~\n")
