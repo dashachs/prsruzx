@@ -87,21 +87,16 @@ def executeParser():
     # clear list of lots
     listOfLots.clear()
 
-    # # setting repeating time
-    # timerTime = 60
-    # print("\n~~~~~~~~~~~~~~~~~~~~~\n"
-    #       "Parser will start again in", timerTime, "seconds"
-    #                                                "\n~~~~~~~~~~~~~~~~~~~~~\n")
-    # time.sleep(timerTime)
-
 
 while True:
     try:
         executeParser()
-    except WebDriverException:
-        print("WebDriverException")
     except TimeoutException:
-        print("TimeoutException")
+        print("TIMEOUT_EXCEPTION")
+    except WebDriverException:
+        print("WEB_DRIVER_EXCEPTION")
+    except:
+        print("ERROR")
     finally:
         # setting repeating time
         timerTime = 60

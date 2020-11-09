@@ -8,12 +8,23 @@ import object_of_lot
 
 def openAndLoadPage(browser, link):
     browser.get(link)
-    print("connection to the site was successful")
+    try:
+        textXPATH = "//div[@class='filter__column-label mr-3']"
+        # setting waiting time
+        wait = WebDriverWait(browser, 10)
+        element = wait.until(
+            expected_conditions.text_to_be_present_in_element((By.XPATH, textXPATH), "Показаны")
+        )
+    except TimeoutException:  # https://qna.habr.com/q/641216 - храни их господь
+        print("TimeoutException in openAndLoadPage")
+        raise TimeoutException
+    finally:
+        print("connection to the site was successful")
 
-    # press button for add new lots
-    loadButton = find_loadButton(browser)
-    if loadButton != -1:
-        press_loadButton(loadButton)
+        # press button for add new lots
+        loadButton = find_loadButton(browser)
+        if loadButton != -1:
+            press_loadButton(loadButton)
 
 
 def find_loadButton(browser):
@@ -81,8 +92,8 @@ def parseLot(browser, link, currentLot):
             expected_conditions.text_to_be_present_in_element((By.XPATH, textXPATH), "Дата начала:")
         )
     except TimeoutException:  # https://qna.habr.com/q/641216 - храни их господь
-        print("TimeoutException in parsing ig (idk)")
-        return 0
+        print("TimeoutException in parseLot ig (idk)")
+        raise TimeoutException
     finally:
         fillInLot(browser, link, currentLot)
 
@@ -186,20 +197,3 @@ def printLotInfo(currentLot):  # temp
     # "\nstartingPrice\n  ", currentLot.startingPrice,
     # "\ncurrency\n  ", currentLot.currency)
 
-
-# def checkIfPageIsLoaded(browser, link):
-#     browser.get(link)
-#     # waiting for page to load
-#     loadingStatus = 1
-#     try:
-#         textXPATH = "/main"
-#         # setting waiting time
-#         wait = WebDriverWait(browser, 10)
-#         element = wait.until(
-#             expected_conditions.text_to_be_present_in_element((By.XPATH, textXPATH), "№ лота:")
-#         )
-#     except TimeoutException:  # https://qna.habr.com/q/641216 - храни их господь
-#         print("TimeoutException or an empty page")
-#         loadingStatus = 0
-#     finally:
-#         return loadingStatus
