@@ -8,7 +8,7 @@ def inputToDB(con, lot):
          lot.customerContact, lot.deliveryAddress, lot.deliveryTerm, lot.deposit, lot.depositPayment,
          lot.advancePayment, lot.paymentMethod, lot.paymentPeriod, lot.specialConditions, lot.attachedFile,
          lot.description))
-    print("{} inserted successfully".format(lot.lotID))
+    print("  {} was inserted successfully".format(lot.lotID))
     con.commit()
 
 
@@ -45,9 +45,12 @@ def findExpiredLots(con):
 
 
 def getForEverything(con, listOfLots):  # название временное
+    print("Processing data...")
     for lot in listOfLots:
         getForThisLot(con, lot)
-        printLotIDs(lot)
+        # printLotIDs(lot)
+    print("Data was processed successfully\n"
+          "Adding to Database...")
 
 
 def getForThisLot(con, currentLot):
@@ -72,9 +75,11 @@ def getCategoryId(con, required):
     rows = cur.fetchall()
     for row in rows:
         if row[1].lower().replace(' ', '') == required.lower().replace(' ', ''):
-            print("getCategoryId done successfully")
+            # print("getCategoryId done successfully")
             return row[0]
-    print("getCategoryId didn't find name:", required)
+    print("  Category was not found:", required)
+    # тут добавление
+    print("  Category was added to Database successfully")
     rows.clear()
     return -1
 
@@ -85,9 +90,11 @@ def getCurrencyId(con, required):
     rows = cur.fetchall()
     for row in rows:
         if row[1].upper().replace(' ', '') == required.upper().replace(' ', ''):
-            print("getCurrencyId done successfully", required, "ID =", row[0])
+            # print("getCurrencyId done successfully", required, "ID =", row[0])
             return row[0]
-    print("getCurrencyId didn't find name:", required)
+    print("  Currency was not found:", required)
+    # тут добавление
+    print("  Currency was added to Database successfully")
     rows.clear()
     return -1
 
@@ -98,9 +105,11 @@ def getRegionId(con, required):
     rows = cur.fetchall()
     for row in rows:
         if row[1].lower().replace(' ', '') == required.replace('город', '').lower().replace(' ', ''):
-            print("getRegionId done successfully")
+            # print("getRegionId done successfully")
             return row[0]
-    print("getRegionId didn't find name:", required)
+    print("  Region was not found:", required)
+    # тут добавление
+    print("  Region  was added to Database successfully")
     rows.clear()
     return -1
 
@@ -117,11 +126,9 @@ def getAreaId(con, required):
     scrap = scrap.replace('г.', '')
     for row in rows:
         if scrap in row[2].lower().replace(' ', ''):
-            print("getAreaId done successfully")
+            # print("getAreaId done successfully")
             return row[1]
-    print("getAreaId didn't find name:", required)
-    rows.clear()
-    return -1
+    print("  Area was not found:", required)
     # cur.execute("INSERT INTO geo_areas_translations(id, area_id, name, locale) VALUES (%s, %s, %s, %s)",
     #             (rows[-1][0] + 1,
     #              rows[-1][1] + 1,
@@ -133,7 +140,9 @@ def getAreaId(con, required):
     #              required,
     #              'uzb'))
     # con.commit()
-
+    print("  Area  was added to Database successfully")
+    rows.clear()
+    return -1
 
 def inTable(con, lotNumber):
     cur = con.cursor()
