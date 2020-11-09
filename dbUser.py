@@ -24,6 +24,7 @@ def findExpiredLots(con):
     # setting timezone for current session to avoid mistakes
     cur.execute("SET TIMEZONE=5")
     cur.execute("UPDATE etender_uzex_test SET status = 'expired' WHERE ended_at < now()")
+    con.commit()
 
 
 # def deleteRow(id, con):
