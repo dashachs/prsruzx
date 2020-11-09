@@ -78,11 +78,21 @@ def getCategoryId(con, required):
             # print("getCategoryId done successfully")
             return row[0]
     print("  Category was not found:", required)
-    # тут добавление
+    # cur.execute("INSERT INTO bidding_categories_translations(id, category_id, name, locale) VALUES (%s, %s, %s, %s)",
+    #             (rows[-1][0] + 1,
+    #              rows[-1][1] + 1,
+    #              required,
+    #              'rus'))
+    # cur.execute("INSERT INTO bidding_categories_translations(id, category_id, name, locale) VALUES (%s, %s, %s, %s)",
+    #             (rows[-1][0] + 2,
+    #              rows[-1][1] + 1,
+    #              required,
+    #              'uzb'))
+    # con.commit()
     print("  Category was added to Database successfully")
     rows.clear()
     return -1
-
+    # return rows[-1][1] + 1
 
 def getCurrencyId(con, required):
     cur = con.cursor()
@@ -93,10 +103,16 @@ def getCurrencyId(con, required):
             # print("getCurrencyId done successfully", required, "ID =", row[0])
             return row[0]
     print("  Currency was not found:", required)
-    # тут добавление
+    # cur.execute("SET TIMEZONE=5")
+    # cur.execute("INSERT INTO finance_currencies(id, slug, created_at, updated_at) VALUES (%s, %s, now(), now())",
+    #             (rows[-1][0] + 1,
+    #              required))
+    # con.commit()
     print("  Currency was added to Database successfully")
+    # print("Please, add description manually")
     rows.clear()
     return -1
+    # return rows[-1][0] + 1
 
 
 def getRegionId(con, required):
@@ -108,10 +124,21 @@ def getRegionId(con, required):
             # print("getRegionId done successfully")
             return row[0]
     print("  Region was not found:", required)
-    # тут добавление
+    # cur.execute("INSERT INTO geo_regions_translations(id, region_id, name, locale) VALUES (%s, %s, %s, %s)",
+    #             (rows[-1][0] + 1,
+    #              rows[-1][1] + 1,
+    #              required,
+    #              'rus'))
+    # cur.execute("INSERT INTO geo_regions_translations(id, region_id, name, locale) VALUES (%s, %s, %s, %s)",
+    #             (rows[-1][0] + 2,
+    #              rows[-1][1] + 1,
+    #              required,
+    #              'uzb'))
+    # con.commit()
     print("  Region  was added to Database successfully")
     rows.clear()
     return -1
+    # return rows[-1][1] + 1
 
 
 def getAreaId(con, required):
@@ -143,6 +170,7 @@ def getAreaId(con, required):
     print("  Area  was added to Database successfully")
     rows.clear()
     return -1
+    # return rows[-1][1] + 1
 
 def inTable(con, lotNumber):
     cur = con.cursor()
