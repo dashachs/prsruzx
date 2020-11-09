@@ -2,6 +2,9 @@ from selenium import webdriver
 from psycopg2 import OperationalError
 import psycopg2
 import time
+
+from selenium.common.exceptions import WebDriverException, TimeoutException
+
 import func
 import dbUser
 
@@ -84,13 +87,25 @@ def executeParser():
     # clear list of lots
     listOfLots.clear()
 
-    # setting repeating time
-    timerTime = 60
-    print("\n~~~~~~~~~~~~~~~~~~~~~\n"
-          "Parser will start again in", timerTime, "seconds"
-                                                   "\n~~~~~~~~~~~~~~~~~~~~~\n")
-    time.sleep(timerTime)
+    # # setting repeating time
+    # timerTime = 60
+    # print("\n~~~~~~~~~~~~~~~~~~~~~\n"
+    #       "Parser will start again in", timerTime, "seconds"
+    #                                                "\n~~~~~~~~~~~~~~~~~~~~~\n")
+    # time.sleep(timerTime)
 
 
 while True:
-    executeParser()
+    try:
+        executeParser()
+    except WebDriverException:
+        print("WebDriverException")
+    except TimeoutException:
+        print("TimeoutException")
+    finally:
+        # setting repeating time
+        timerTime = 60
+        print("\n~~~~~~~~~~~~~~~~~~~~~\n"
+              "Parser will start again in", timerTime, "seconds"
+              "\n~~~~~~~~~~~~~~~~~~~~~\n")
+        time.sleep(timerTime)
