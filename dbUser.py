@@ -151,6 +151,7 @@ def getAreaId(con, required):
     scrap = scrap.replace('район', '')
     scrap = scrap.replace('р-он', '')
     scrap = scrap.replace('г.', '')
+    scrap = scrap.replace('p', 'р')
     for row in rows:
         if scrap in row[2].lower().replace(' ', ''):
             # print("getAreaId done successfully")
