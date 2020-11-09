@@ -88,7 +88,7 @@ def executeParser():
     timerTime = 60
     print("\n~~~~~~~~~~~~~~~~~~~~~\n"
           "Parser will start again in", timerTime, "seconds"
-          "\n~~~~~~~~~~~~~~~~~~~~~\n")
+                                                   "\n~~~~~~~~~~~~~~~~~~~~~\n")
     time.sleep(timerTime)
 
 
