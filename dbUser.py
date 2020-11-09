@@ -23,7 +23,7 @@ def findExpiredLots(con):
     cur = con.cursor()
     # setting timezone for current session to avoid mistakes
     cur.execute("SET TIMEZONE=5")
-    cur.execute("UPDATE etender_uzex_test SET status = %s WHERE ended_at < now()", ('expired'))
+    cur.execute("UPDATE etender_uzex_test SET status = 'expired' WHERE ended_at < now()")
 
 
 # def deleteRow(id, con):
@@ -78,28 +78,28 @@ def getCategoryId(con, required):
     return -1
 
 
-def getCurrencyId(con, requierd):
+def getCurrencyId(con, required):
     cur = con.cursor()
     cur.execute("SELECT id, slug FROM finance_currencies")
     rows = cur.fetchall()
     for row in rows:
-        if row[1].upper().replace(' ', '') == requierd.upper().replace(' ', ''):
-            print("getCurrencyId done successfully", requierd, "ID =", row[0])
+        if row[1].upper().replace(' ', '') == required.upper().replace(' ', ''):
+            print("getCurrencyId done successfully", required, "ID =", row[0])
             return row[0]
-    print("getCurrencyId didn't find name:", requierd)
+    print("getCurrencyId didn't find name:", required)
     rows.clear()
     return -1
 
 
-def getRegionId(con, requierd):
+def getRegionId(con, required):
     cur = con.cursor()
     cur.execute("SELECT region_id, name FROM geo_regions_translations")
     rows = cur.fetchall()
     for row in rows:
-        if row[1].lower().replace(' ', '') == requierd.replace('город', '').lower().replace(' ', ''):
+        if row[1].lower().replace(' ', '') == required.replace('город', '').lower().replace(' ', ''):
             print("getRegionId done successfully")
             return row[0]
-    print("getRegionId didn't find name:", requierd)
+    print("getRegionId didn't find name:", required)
     rows.clear()
     return -1
 
