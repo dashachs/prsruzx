@@ -128,6 +128,7 @@ def fillInLot(browser, link, currentLot):
         "//div[@class='lot__products__item']/h5[@class='text-primary mb-3']").text.replace('1 - ', '')  # description
     tempForPrice = browser.find_element_by_xpath(
         "//div[@class='card  lot__top-info ']/p/strong[@class='text-success mt-3 ']").text
+    currentLot.currency = ""  # to str + str, not None + str
     for i in range(len(tempForPrice)):
         num = len(tempForPrice) - i - 1
         if tempForPrice[num] == ' ':
