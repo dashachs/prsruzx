@@ -1,16 +1,14 @@
 from selenium import webdriver
 from psycopg2 import OperationalError
+from selenium.common.exceptions import WebDriverException, TimeoutException
 import psycopg2
 import time
-
-from selenium.common.exceptions import WebDriverException, TimeoutException
 
 import func
 import dbUser
 
 
 def executeParser():
-    # print("parser started successfully")
     print("Parsing...")
 
     options = webdriver.ChromeOptions()
@@ -22,26 +20,21 @@ def executeParser():
 
     # start chrome browser
     browser = webdriver.Chrome('chromedriver.exe', options=options)
-    # print("browser opened successfully")
 
     # open tenders page
     link = 'http://etender.uzex.uz/lots/2/0'
     func.openAndLoadPage(browser, link)
-    # print("  tenders page loaded to the end successfully")
 
     # parse tenders
     func.parseFromPage(browser, listOfLots)
 
     # reopening browser bc this bitch won't load
     browser.quit()
-    # print("browser closed successfully")
     browser = webdriver.Chrome('chromedriver.exe', options=options)
-    # print("browser reopened successfully\n")
 
     # open contests page
     link = 'http://etender.uzex.uz/lots/1/0'
     func.openAndLoadPage(browser, link)
-    # print("  contests page loaded to the end successfully")
 
     # parse contests
     func.parseFromPage(browser, listOfLots)
@@ -49,10 +42,8 @@ def executeParser():
     print("Parsed successfully")
     # close browser
     browser.quit()
-    # print("browser closed successfully\n")
 
     # database input
-
     while True:
         try:
             con = psycopg2.connect(
@@ -69,14 +60,11 @@ def executeParser():
             break
 
     dbUser.getForEverything(con, listOfLots)
-    # dbUser.addEverything(con, listOfLots)
 
     # adding to DB
     for lot in listOfLots:
         if not dbUser.inTable(con, lot.lotID):
             dbUser.inputToDB(con, lot)
-        # else:
-        #     print(lot.lotID, "already in DB")
 
     # find expired lots
     dbUser.findExpiredLots(con)
@@ -85,7 +73,6 @@ def executeParser():
 
     # close DB
     con.close()
-    # print("Database closed successfully")
 
     # clear list of lots
     listOfLots.clear()

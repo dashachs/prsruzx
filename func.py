@@ -1,4 +1,4 @@
-from selenium.common.exceptions import StaleElementReferenceException
+from selenium.common.exceptions import StaleElementReferenceException, WebDriverException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions
@@ -15,12 +15,10 @@ def openAndLoadPage(browser, link):
         element = wait.until(
             expected_conditions.text_to_be_present_in_element((By.XPATH, textXPATH), "Показаны")
         )
-    except TimeoutException:  # https://qna.habr.com/q/641216 - храни их господь
+    except TimeoutException:
         print("TimeoutException in openAndLoadPage")
         raise TimeoutException
     finally:
-        # print("connection to the site was successful")
-
         # press button for add new lots
         loadButton = find_loadButton(browser)
         if loadButton != -1:
@@ -41,6 +39,8 @@ def press_loadButton(button):
             button.click()
     except StaleElementReferenceException:
         pass
+    except (TimeoutException, WebDriverException):
+        print("Button is not clickable")
 
 
 def parseFromPage(browser, listOfLots):
@@ -63,15 +63,14 @@ def parseFromPage(browser, listOfLots):
 
     # parse lots
     for i in range(len(lotNames)):
-        size = len(listOfLots)  # чтобы не было наслойки
+        size = len(listOfLots)
         link = "http://etender.uzex.uz/lot/" + lotIDs[i]
+
         # adding new lot to list of lots (adding ID and purchase name)
         listOfLots.append(object_of_lot.lot())
         listOfLots[size].lotID = lotIDs[i]
         listOfLots[size].purchaseName = lotNames[i]
         listOfLots[size].customerAddress = lotAddresses[i]
-        # print("==========================")
-        # print("#", size + 1)  # to count lots
         parseLot(browser, link, listOfLots[size])
 
     # clear lists
@@ -82,7 +81,6 @@ def parseFromPage(browser, listOfLots):
 
 def parseLot(browser, link, currentLot):
     browser.get(link)
-
     # waiting for page to load
     try:
         textXPATH = "//div[@class='row lot__top-infro-wrapper ']/div/div[@class='card lot__top-info']/p"
@@ -91,7 +89,7 @@ def parseLot(browser, link, currentLot):
         element = wait.until(
             expected_conditions.text_to_be_present_in_element((By.XPATH, textXPATH), "Дата начала:")
         )
-    except TimeoutException:  # https://qna.habr.com/q/641216 - храни их господь
+    except TimeoutException:
         print("TimeoutException in parseLot ig (idk)")
         raise TimeoutException
     finally:
@@ -155,9 +153,6 @@ def fillInLot(browser, link, currentLot):
     currentLot.customerAddressArea = tempForAddress[1]
     tempForAddress.clear()
 
-    # printing lot information (temp)
-    # printLotInfo(currentLot)
-
 
 def reformatDate(date):
     dateAndTime = date.split(' ')
@@ -166,34 +161,4 @@ def reformatDate(date):
     dateAndTime.clear()
     dayMonthYear.clear()
     return date
-
-
-def printLotInfo(currentLot):  # temp
-    print("lotID:  ", currentLot.lotID)
-    # output is temporarily commented
-    # print("lotID\n  ", currentLot.lotID,
-    # "\ntype\n  ", currentLot.type,
-    # "\nlinkToLot\n  ", currentLot.linkToLot,
-    # "\ncategory\n  ", currentLot.category,
-    # "\nstartedAt\n  ", currentLot.startedAt,
-    # "\nendedAt\n  ", currentLot.endedAt,
-    # "\nstatus\n  ", currentLot.status,
-    # "\npurchaseName\n  ", currentLot.purchaseName,
-    # "\ncustomerName\n  ", currentLot.customerName,
-    # "\ncustomerDetails\n  ", currentLot.customerDetails,
-    # "\ncustomerContact\n  ", currentLot.customerContact,
-    # "\ncustomerAddressRegion\n  ", currentLot.customerAddressRegion,
-    # "\ncustomerAddressArea\n  ", currentLot.customerAddressArea,
-    # "\ndeliveryAddress\n  ", currentLot.deliveryAddress,
-    # "\ndeliveryTerm\n  ", currentLot.deliveryTerm,
-    # "\ndeposit\n  ", currentLot.deposit,
-    # "\ndepositPayment\n  ", currentLot.depositPayment,
-    # "\nadvancePayment\n  ", currentLot.advancePayment,
-    # "\npaymentMethod\n  ", currentLot.paymentMethod,
-    # "\npaymentPeriod\n  ", currentLot.paymentPeriod,
-    # "\nspecialConditions\n  ", currentLot.specialConditions,
-    # "\nattachedFile\n  ", currentLot.attachedFile,
-    # "\ndescription\n  ", currentLot.description,
-    # "\nstartingPrice\n  ", currentLot.startingPrice,
-    # "\ncurrency\n  ", currentLot.currency)
 

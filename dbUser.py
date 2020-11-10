@@ -12,13 +12,6 @@ def inputToDB(con, lot):
     con.commit()
 
 
-# def deleteExpiredLots(con):
-#     cur = con.cursor()
-#     cur.execute("SET TIMEZONE=5")
-#     cur.execute("DELETE FROM etender_uzex_test WHERE ended_at < now()")
-#     con.commit()
-#     print("Expired lots were deleted")
-
 def findExpiredLots(con):
     cur = con.cursor()
     # setting timezone for current session to avoid mistakes
@@ -27,28 +20,10 @@ def findExpiredLots(con):
     con.commit()
 
 
-# def deleteRow(id, con):
-#     cur = con.cursor()
-#     cur.execute("DELETE FROM etender_uzex_test WHERE lot_number={}".format(id))
-#     print("Deletion successful")
-#     con.commit()
-#     con.close()
-#
-#
-# def amountOfRow(con):
-#     cur = con.cursor()
-#     cur.execute("SELECT count(lot_number) FROM etender_uzex_test")
-#     res = cur.fetchall()
-#     con.commit()
-#     con.close()
-#     return res[0][0]
-
-
 def getForEverything(con, listOfLots):  # название временное
     print("Processing data...")
     for lot in listOfLots:
         getForThisLot(con, lot)
-        # printLotIDs(lot)
     print("Data was processed successfully\n"
           "Adding to Database...")
 
@@ -60,22 +35,12 @@ def getForThisLot(con, currentLot):
     currentLot.currencyID = getCurrencyId(con, currentLot.currency)
 
 
-def printLotIDs(currentLot):  # temp
-    print("Lot №  ", currentLot.lotID,
-          "\n  categoryID:  ", currentLot.categoryID,
-          "\n  customerAddressRegionID:  ", currentLot.customerAddressRegionID,
-          "\n  customerAddressAreaID:  ", currentLot.customerAddressAreaID,
-          "\n  currencyID:  ", currentLot.currencyID,
-          "\n======================================\n")
-
-
 def getCategoryId(con, required):
     cur = con.cursor()
     cur.execute("SELECT category_id, name FROM bidding_categories_translations")
     rows = cur.fetchall()
     for row in rows:
         if row[1].lower().replace(' ', '') == required.lower().replace(' ', ''):
-            # print("getCategoryId done successfully")
             return row[0]
     print("  Category was not found:", required)
     # cur.execute("INSERT INTO bidding_categories_translations(id, category_id, name, locale) VALUES (%s, %s, %s, %s)",
@@ -91,8 +56,9 @@ def getCategoryId(con, required):
     # con.commit()
     print("  Category was added to Database successfully")
     rows.clear()
-    return -1
     # return rows[-1][1] + 1
+    return -1
+
 
 def getCurrencyId(con, required):
     cur = con.cursor()
@@ -100,7 +66,6 @@ def getCurrencyId(con, required):
     rows = cur.fetchall()
     for row in rows:
         if row[1].upper().replace(' ', '') == required.upper().replace(' ', ''):
-            # print("getCurrencyId done successfully", required, "ID =", row[0])
             return row[0]
     print("  Currency was not found:", required)
     # cur.execute("SET TIMEZONE=5")
@@ -111,8 +76,8 @@ def getCurrencyId(con, required):
     print("  Currency was added to Database successfully")
     # print("Please, add description manually")
     rows.clear()
-    return -1
     # return rows[-1][0] + 1
+    return -1
 
 
 def getRegionId(con, required):
@@ -121,7 +86,6 @@ def getRegionId(con, required):
     rows = cur.fetchall()
     for row in rows:
         if row[1].lower().replace(' ', '') == required.replace('город', '').lower().replace(' ', ''):
-            # print("getRegionId done successfully")
             return row[0]
     print("  Region was not found:", required)
     # cur.execute("INSERT INTO geo_regions_translations(id, region_id, name, locale) VALUES (%s, %s, %s, %s)",
@@ -137,8 +101,8 @@ def getRegionId(con, required):
     # con.commit()
     print("  Region  was added to Database successfully")
     rows.clear()
-    return -1
     # return rows[-1][1] + 1
+    return -1
 
 
 def getAreaId(con, required):
@@ -154,7 +118,6 @@ def getAreaId(con, required):
     scrap = scrap.replace('p', 'р')
     for row in rows:
         if scrap in row[2].lower().replace(' ', ''):
-            # print("getAreaId done successfully")
             return row[1]
     print("  Area was not found:", required)
     # cur.execute("INSERT INTO geo_areas_translations(id, area_id, name, locale) VALUES (%s, %s, %s, %s)",
@@ -170,8 +133,9 @@ def getAreaId(con, required):
     # con.commit()
     print("  Area  was added to Database successfully")
     rows.clear()
-    return -1
     # return rows[-1][1] + 1
+    return -1
+
 
 def inTable(con, lotNumber):
     cur = con.cursor()
