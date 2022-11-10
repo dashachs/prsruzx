@@ -33,7 +33,7 @@ def executeParser():
     browser = webdriver.Chrome('chromedriver.exe', options=options)
 
     # open contests page
-    link = 'http://etender.uzex.uz/lots/1/0'
+    link = 'http://-/lots/1/0'
     func.openAndLoadPage(browser, link)
 
     # parse contests
@@ -48,9 +48,9 @@ def executeParser():
         try:
             con = psycopg2.connect(
                 database="postgres",
-                user="anwar",
-                password="etender.uz",
-                host="database-rds.cbs8omqsohea.eu-west-3.rds.amazonaws.com",
+                user="-",
+                password="-.uz",
+                host="-.com",
                 port="5432"
             )
         except OperationalError:
